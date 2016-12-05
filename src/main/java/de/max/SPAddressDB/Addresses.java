@@ -20,8 +20,6 @@ public class Addresses {
 		System.out.println("|                         |");
 		System.out.println("*-------------------------*");
 		System.out.println();
-		System.out.println("random test");
-		System.out.println("another random test line");
 		addresses = db.get();
 		mainMenu();
 	}
@@ -73,13 +71,12 @@ public class Addresses {
 		// only display the elements from start -> start + listLen
 		for (int i = start; i < Math.min(listLen + start, len); i++) {
 			Address j = addresses.get(i);
-			Menu.row(addresses.indexOf(j) + "", j.getFirstName(), j.getLastName(), j.getEmail(),
-					j.getPhone());
+			Menu.row(addresses.indexOf(j) + "", j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
-		// if there's entries that have not been displayed ask the user if he wants to see the next page
+		// if there's entries that have not been displayed ask the user if he
+		// wants to see the next page
 		if (len - 1 > start + listLen) {
-			System.out.format("Page (%d/%d) Show More (Y/N)?: ", start / listLen + 1,
-					addresses.size() / listLen + 1);
+			System.out.format("Page (%d/%d) Show More (Y/N)?: ", start / listLen + 1, addresses.size() / listLen + 1);
 			if (getString().toUpperCase().equals("Y")) {
 				browse(start + listLen);
 			}
@@ -92,15 +89,15 @@ public class Addresses {
 	private void createEntry() {
 		Address address = new Address();
 		System.out.print("First Name: ");
-			address.setFirstName(getString());
+		address.setFirstName(getString());
 		System.out.print("Last Name: ");
-			address.setLastName(getString());
+		address.setLastName(getString());
 		System.out.print("Optional Email: ");
-			String a = getString();
-			address.setEmail((a.equals("")) ? "-" : a);
+		String a = getString();
+		address.setEmail((a.equals("")) ? "-" : a);
 		System.out.print("Optional Phone: ");
-			String b = getString();
-			address.setPhone((b.equals("")) ? "-" : b);
+		String b = getString();
+		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.add(address);
 	}
 
@@ -124,8 +121,7 @@ public class Addresses {
 		Menu.head();
 		for (Address i : addresses) {
 			if (i.search(mask)) {
-				Menu.row(addresses.indexOf(i) + "", i.getFirstName(), i.getLastName(), i.getEmail(),
-					i.getPhone());
+				Menu.row(addresses.indexOf(i) + "", i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
 			}
 		}
 	}

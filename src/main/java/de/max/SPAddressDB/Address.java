@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Address implements Serializable {
 
-	private static final long		serialVersionUID	= -5733008229122025870L;
-	private Map<String, String>	data							= new LinkedHashMap<>();
+	private static final long serialVersionUID = -5733008229122025870L;
+	private Map<String, String> data = new LinkedHashMap<>();
 
 	/**
 	 * enum to provide type safety (and to keep Key IDs consistant)
@@ -15,8 +15,7 @@ public class Address implements Serializable {
 	 * @author max
 	 */
 	public enum Types {
-		FIRSTNAME("First Name"), LASTNAME("Last Name"), EMAIL("Email"), PHONE(
-				"Phone");
+		FIRSTNAME("First Name"), LASTNAME("Last Name"), EMAIL("Email"), PHONE("Phone");
 		private String get;
 
 		private Types(String type) {
@@ -24,8 +23,7 @@ public class Address implements Serializable {
 		}
 	}
 
-	public Address(String firstName, String lastName, String email,
-			String phone) {
+	public Address(String firstName, String lastName, String email, String phone) {
 		this.data.put(Types.FIRSTNAME.get, firstName);
 		this.data.put(Types.LASTNAME.get, lastName);
 		this.data.put(Types.EMAIL.get, email);
@@ -45,7 +43,7 @@ public class Address implements Serializable {
 
 	/**
 	 * @param firstName
-	 *          the firstName to set
+	 *            the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.data.put(Types.FIRSTNAME.get, firstName);
@@ -60,7 +58,7 @@ public class Address implements Serializable {
 
 	/**
 	 * @param lastName
-	 *          the lastName to set
+	 *            the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.data.put(Types.LASTNAME.get, lastName);
@@ -75,7 +73,7 @@ public class Address implements Serializable {
 
 	/**
 	 * @param email
-	 *          the email to set
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.data.put(Types.EMAIL.get, email);
@@ -90,7 +88,7 @@ public class Address implements Serializable {
 
 	/**
 	 * @param phone
-	 *          the phone to set
+	 *            the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.data.put(Types.PHONE.get, phone);

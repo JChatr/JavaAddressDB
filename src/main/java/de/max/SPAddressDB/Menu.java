@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class Menu {
 
-	private final static int		COLS	= 5;
-	private final static int		WIDTH	= 15;
-	private final static String	COL		= getCol(WIDTH);
-	private final static String	SEP		= "|";
+	private final static int COLS = 5;
+	private final static int WIDTH = 15;
+	private final static String COL = getCol(WIDTH);
+	private final static String SEP = "|";
 
 	public static void head() {
 		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
@@ -24,8 +24,7 @@ public class Menu {
 		System.out.print(SEP);
 		for (int i = 0; i < COLS; i++) {
 			if (in[i].length() > COL.length())
-				System.out.format("%" + WIDTH + "s%s", in[i].substring(0, COL.length()),
-						SEP);
+				System.out.format("%" + WIDTH + "s%s", in[i].substring(0, COL.length()), SEP);
 			else {
 				System.out.format("%" + WIDTH + "s%s", in[i], SEP);
 			}

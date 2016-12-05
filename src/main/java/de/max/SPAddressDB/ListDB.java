@@ -14,8 +14,8 @@ import java.util.List;
 
 public class ListDB<T> implements Database<T> {
 
-	private List<T>	data;
-	private String	defDir	= "./DB.txt";
+	private List<T> data;
+	private String defDir = "./DB.txt";
 
 	public ListDB() {
 		get();
@@ -56,9 +56,7 @@ public class ListDB<T> implements Database<T> {
 	public boolean push(String directory) {
 
 		Path path = Paths.get(directory);
-		try (
-				OutputStream os = Files.newOutputStream(path,
-						StandardOpenOption.CREATE);
+		try (OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE);
 				ObjectOutputStream oos = new ObjectOutputStream(os)) {
 			for (Object i : data) {
 				oos.writeObject(i);
