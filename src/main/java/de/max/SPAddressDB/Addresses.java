@@ -55,7 +55,6 @@ public class Addresses {
 				exit();
 				return;
 		}
-		// System.out.println("---------------------------");
 		db.update(addresses);
 		mainMenu();
 	}
