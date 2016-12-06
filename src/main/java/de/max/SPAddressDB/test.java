@@ -22,7 +22,8 @@ public class test {
 		Path p = Paths.get("/home/max/Desktop/test.txt");
 		for (String i : in) {
 			System.out.println(i);
-			try (BufferedWriter w = Files.newBufferedWriter(p, StandardOpenOption.WRITE, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+			try (BufferedWriter w = Files.newBufferedWriter(p, StandardOpenOption.WRITE, StandardOpenOption.CREATE,
+					StandardOpenOption.APPEND)) {
 				w.write(i);
 				w.newLine();
 			} catch (IOException e) {

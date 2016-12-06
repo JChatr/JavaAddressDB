@@ -1,5 +1,6 @@
 package de.max.SPAddressDB;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -15,7 +16,8 @@ import java.util.List;
 public class ListDB<T> implements Database<T> {
 
 	private List<T> data;
-	private String defDir = "./DB.txt";
+	// default dir is in a .txt in the parent folder of the .jar
+	private String defDir = "." + File.separator + "DB.txt";
 
 	public ListDB() {
 		get();
@@ -29,7 +31,10 @@ public class ListDB<T> implements Database<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> get(String directory) {
-		Path path = Paths.get(directory);
+		// need to make sure path is valid
+		if (!validDir(directory)) return null;
+		
+		Path path= Paths.get(directory);
 		this.data = new ArrayList<>();
 		try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ);
 				ObjectInputStream ois = new ObjectInputStream(is)) {
@@ -38,8 +43,8 @@ public class ListDB<T> implements Database<T> {
 				T obj = (T) ois.readObject();
 				data.add(obj);
 			}
-		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {	
 		}
 		return this.data;
 	}
@@ -54,7 +59,9 @@ public class ListDB<T> implements Database<T> {
 	 */
 	@Override
 	public boolean push(String directory) {
-
+		// need to make sure path is valid
+//		if (!validDir(directory)) return false;
+		
 		Path path = Paths.get(directory);
 		try (OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE);
 				ObjectOutputStream oos = new ObjectOutputStream(os)) {
@@ -72,5 +79,12 @@ public class ListDB<T> implements Database<T> {
 	public boolean update(List<T> data) {
 		this.data = data;
 		return push();
+	}
+	
+	private boolean validDir(String directory) {
+		// current dir with out path extension
+		File dir = new File(directory.substring(0, directory.lastIndexOf(File.separator) + 1));
+		if (!dir.isDirectory()) return false;
+		return true;
 	}
 }
