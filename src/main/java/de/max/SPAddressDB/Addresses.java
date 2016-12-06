@@ -20,7 +20,6 @@ public class Addresses {
 		System.out.println("|                         |");
 		System.out.println("*-------------------------*");
 		System.out.println();
-		System.out.println("test");
 		addresses = db.get();
 		mainMenu();
 	}
@@ -160,9 +159,9 @@ public class Addresses {
 		try {
 			input = scan.nextInt();
 		} catch (InputMismatchException e) {
-			System.err.println("Your input is not a number try again:");
+			System.err.print("Your input is not a number \nTry again: ");
 			scan.nextLine();
-			getInt(rangeMin, rangeMax);
+			return getInt(rangeMin, rangeMax);	
 		}
 		if (input >= rangeMin && input <= rangeMax) {
 			return input;
