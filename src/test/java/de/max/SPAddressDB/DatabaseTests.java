@@ -18,8 +18,8 @@ public class DatabaseTests {
 	@Test
 	public void writeRand() {
 		int tests = 100;
-//		String path = "." + File.separator + "tempDB.txt";
-		String path = "/home/max/Desktop/nDB.txt";
+		String path = "." + File.separator + "tempDB.txt";
+//		String path = "/home/max/Desktop/nDB.txt";
 		Database<String> db = new ListDB<>(path);
 		List<String> l = new ArrayList<>();
 		Random r = new Random();
@@ -29,10 +29,12 @@ public class DatabaseTests {
 			db.update(l);
 		}
 		Assert.assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
-//		File rem = new File(path);
-//		rem.delete();
+		File rem = new File(path);
+		rem.delete();
 	}
-	
+	/**
+	 * tests for invalid paths
+	 */
 	@Test
 	public void invalidPathGet1() {
 		String path = "";
