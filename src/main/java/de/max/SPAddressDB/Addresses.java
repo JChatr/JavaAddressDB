@@ -20,6 +20,7 @@ public class Addresses {
 		System.out.println("|                         |");
 		System.out.println("*-------------------------*");
 		System.out.println();
+		System.out.println("test");
 		addresses = db.get();
 		mainMenu();
 	}
