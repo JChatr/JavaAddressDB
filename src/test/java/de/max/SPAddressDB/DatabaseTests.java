@@ -12,13 +12,13 @@ import org.junit.Test;
 
 public class DatabaseTests {
 
+	private String path = "." + File.separator + "tempDB.txt";
 	/**
 	 * tests weather the vals that get written are also read
 	 */
 	@Test
 	public void writeRand() {
 		int tests = 100;
-		String path = "." + File.separator + "tempDB.txt";
 //		String path = "/home/max/Desktop/nDB.txt";
 		Database<String> db = new ListDB<>(path);
 		List<String> l = new ArrayList<>();
@@ -39,13 +39,17 @@ public class DatabaseTests {
 	public void invalidPathGet1() {
 		String path = "";
 		Path p = Paths.get("5535235235");
-		Database<String> db = new ListDB<>();
+		Database<String> db = new ListDB<>(path);
 		Assert.assertNull(db.get(path));
+		File rem = new File(path);
+		rem.delete();
 	}
 	@Test
 	public void invalidPathGet2() {
 		String path = "/hom:e/max";
-		Database<String> db = new ListDB<>();
+		Database<String> db = new ListDB<>(path);
 		Assert.assertNull(db.get(path));
+		File rem = new File(path);
+		rem.delete();
 	}
 }
