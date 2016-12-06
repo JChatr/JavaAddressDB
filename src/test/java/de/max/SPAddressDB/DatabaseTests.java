@@ -1,5 +1,6 @@
 package de.max.SPAddressDB;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,8 +17,10 @@ public class DatabaseTests {
 	 */
 	@Test
 	public void writeRand() {
-		int tests = 10;
-		Database<String> db = new ListDB<>();
+		int tests = 100;
+//		String path = "." + File.separator + "tempDB.txt";
+		String path = "/home/max/Desktop/nDB.txt";
+		Database<String> db = new ListDB<>(path);
 		List<String> l = new ArrayList<>();
 		Random r = new Random();
 		
@@ -26,6 +29,8 @@ public class DatabaseTests {
 			db.update(l);
 		}
 		Assert.assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
+//		File rem = new File(path);
+//		rem.delete();
 	}
 	
 	@Test
@@ -36,8 +41,8 @@ public class DatabaseTests {
 		Assert.assertNull(db.get(path));
 	}
 	@Test
-	public void invalidPathPush() {
-		String path = "sddedaadwadw";
+	public void invalidPathGet2() {
+		String path = "/hom:e/max";
 		Database<String> db = new ListDB<>();
 		Assert.assertNull(db.get(path));
 	}

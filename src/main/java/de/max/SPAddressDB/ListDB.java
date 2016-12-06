@@ -17,15 +17,20 @@ public class ListDB<T> implements Database<T> {
 
 	private List<T> data;
 	// default dir is in a .txt in the parent folder of the .jar
-	private String defDir = "." + File.separator + "DB.txt";
+	private String globalDir = "." + File.separator + "DB.txt";
 
 	public ListDB() {
+		get();
+	}
+	
+	public ListDB(String directory) {
+		this.globalDir = directory;
 		get();
 	}
 
 	@Override
 	public List<T> get() {
-		return get(defDir);
+		return get(globalDir);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -51,7 +56,7 @@ public class ListDB<T> implements Database<T> {
 
 	@Override
 	public boolean push() {
-		return push(defDir);
+		return push(globalDir);
 	}
 
 	/**
