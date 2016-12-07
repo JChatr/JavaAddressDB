@@ -31,7 +31,6 @@ public class Address implements Serializable {
 	}
 
 	public Address() {
-
 	}
 
 	/**
