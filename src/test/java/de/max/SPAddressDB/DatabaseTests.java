@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.Tesst;
 
 public class DatabaseTests {
 
@@ -28,7 +28,7 @@ public class DatabaseTests {
 			l.add(r.nextInt(i * i) + "");
 			db.update(l);
 		}
-		Assert.assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
+		assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
 		File rem = new File(path);
 		rem.delete();
 	}
@@ -40,7 +40,7 @@ public class DatabaseTests {
 		String path = "";
 		Path p = Paths.get("5535235235");
 		Database<String> db = new ListDB<>(path);
-		Assert.assertNull(db.get(path));
+		assertNull(db.get(path));
 		File rem = new File(path);
 		rem.delete();
 	}
@@ -48,7 +48,7 @@ public class DatabaseTests {
 	public void invalidPathGet2() {
 		String path = "/hom:e/max";
 		Database<String> db = new ListDB<>(path);
-		Assert.assertNull(db.get(path));
+		assertNull(db.get(path));
 		File rem = new File(path);
 		rem.delete();
 	}
