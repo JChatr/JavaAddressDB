@@ -15,7 +15,7 @@ public class Address implements Serializable {
 	 * @author max
 	 */
 	public enum Types {
-		FIRSTNAME("First Name"), LASTNAME("Last Name"), EMAIL("Email"), PHONE("Phone");
+		ID ("ID"), FIRSTNAME("First Name"), LASTNAME("Last Name"), EMAIL("Email"), PHONE("Phone");
 		private String get;
 
 		private Types(String type) {
@@ -23,7 +23,8 @@ public class Address implements Serializable {
 		}
 	}
 
-	public Address(String firstName, String lastName, String email, String phone) {
+	public Address(String id, String firstName, String lastName, String email, String phone) {
+		this.data.put(Types.ID.get, id);
 		this.data.put(Types.FIRSTNAME.get, firstName);
 		this.data.put(Types.LASTNAME.get, lastName);
 		this.data.put(Types.EMAIL.get, email);
@@ -33,7 +34,21 @@ public class Address implements Serializable {
 	public Address() {
 
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
+	public String getId() {
+		return data.get(Types.ID.get);
+	}
+	/**
+	 * 
+	 * @param id
+	 */
+	public void setId(String id) {
+		this.data.put(Types.ID.get, id);
+	}
+	
 	/**
 	 * @return the firstName
 	 */

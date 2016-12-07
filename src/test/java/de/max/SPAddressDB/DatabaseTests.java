@@ -19,7 +19,6 @@ public class DatabaseTests {
 	@Test
 	public void writeRand() {
 		int tests = 100;
-//		String path = "/home/max/Desktop/nDB.txt";
 		Database<String> db = new ListDB<>(path);
 		List<String> l = new ArrayList<>();
 		Random r = new Random();
