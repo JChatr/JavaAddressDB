@@ -128,7 +128,7 @@ public class Addresses {
 		Menu.head();
 		for (Address i : addresses) {
 			if (i.search(mask)) {
-				Menu.row(addresses.indexOf(i) + "", i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
+				Menu.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
 			}
 		}
 	}
