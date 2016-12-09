@@ -1,5 +1,6 @@
 package de.max.SPAddressDB;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
@@ -111,6 +112,7 @@ public class Addresses {
 	private void deleteEntry() {
 		int removed = 0;
 		if (!isEmpty()) {
+			List<Address> deletion = new ArrayList<>();
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
@@ -118,11 +120,13 @@ public class Addresses {
 			for (int i : input) {
 				for (Address j : addresses) {
 					if (j.getId().equals(i + "")){
-						addresses.remove(j);
+						deletion.add(j);
 						removed++;
 					}
 				}
 			}
+			// objects have to be deleted like this because of concurrency issues
+			addresses.removeAll(deletion);
 			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
 			System.err.println("Sorry,\n cannot delete entrys form an empty database");
@@ -222,7 +226,7 @@ public class Addresses {
 			for (String i : exp) {
 				// split the already split input again to get any possible ranges
 				String[] tmp = i.split("\\D+");
-				if (tmp.length > 1) {
+				if (tmp.length > 2) {
 					// if the input contains a separated list
 					for (String j : tmp) {
 						range.add(Integer.parseInt(j));
