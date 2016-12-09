@@ -59,7 +59,7 @@ public class ListDB<T> implements Database<T> {
 	}
 
 	/**
-	 * serialise each address object to the specified directory
+	 * serialize each address object to the specified directory
 	 */
 	@Override
 	public boolean push(String directory) {
