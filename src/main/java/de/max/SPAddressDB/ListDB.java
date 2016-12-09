@@ -40,7 +40,6 @@ public class ListDB<T> implements Database<T> {
 		if (!validDir(directory)) return null;
 		
 		Path path= Paths.get(directory);
-		this.data = new ArrayList<>();
 		try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ);
 				ObjectInputStream ois = new ObjectInputStream(is)) {
 			this.data = new ArrayList<>();
@@ -66,10 +65,9 @@ public class ListDB<T> implements Database<T> {
 	public boolean push(String directory) {
 		// need to make sure path is valid
 //		if (!validDir(directory)) return false;
-		
 		Path path = Paths.get(directory);
-		try (OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE);
-				ObjectOutputStream oos = new ObjectOutputStream(os)) {
+		try (	OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE);
+				ObjectOutputStream oos = new ObjectOutputStream(os)		) {
 			for (Object i : data) {
 				oos.writeObject(i);
 			}
