@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class Addresses {
@@ -110,16 +109,23 @@ public class Addresses {
 	 * deletes records if there are any
 	 */
 	private void deleteEntry() {
+		int removed = 0;
 		if (!isEmpty()) {
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
-			String input = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE) + "";
-			for (Address i : addresses) {
-				if (i.getId().equals(input))	addresses.remove(i);
+			int[] input = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			for (int i : input) {
+				for (Address j : addresses) {
+					if (j.getId().equals(i + "")){
+						addresses.remove(j);
+						removed++;
+					}
+				}
 			}
+			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
-			System.err.println("Sorry,\n cannot delete entry form an empty database");
+			System.err.println("Sorry,\n cannot delete entrys form an empty database");
 		}
 	}
 
