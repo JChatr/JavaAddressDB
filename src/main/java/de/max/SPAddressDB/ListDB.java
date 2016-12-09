@@ -17,7 +17,7 @@ public class ListDB<T> implements Database<T> {
 
 	private List<T> data;
 	// default dir is in a .txt in the parent folder of the .jar
-	private String globalDir = "." + File.separator + "DB.txt";
+	private String globalDir = "."+ File.separator + "DB.txt";
 
 	public ListDB() {
 		get();

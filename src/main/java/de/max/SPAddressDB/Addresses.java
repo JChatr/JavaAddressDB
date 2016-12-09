@@ -11,6 +11,7 @@ public class Addresses {
 	private List<Address> addresses;
 	// periodically updated list
 	private Database<Address> db = new ListDB<>();
+	private int lastIndex;
 	private final int listLen = 10;
 
 	public void run() {
@@ -70,7 +71,7 @@ public class Addresses {
 		// only display the elements from start -> start + listLen
 		for (int i = start; i < Math.min(listLen + start, len); i++) {
 			Address j = addresses.get(i);
-			Menu.row(addresses.indexOf(j) + "", j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
+			Menu.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		// if there's entries that have not been displayed ask the user if he
 		// wants to see the next page
@@ -86,7 +87,9 @@ public class Addresses {
 	 * gets user input for the entry
 	 */
 	private void createEntry() {
+		lastIndex = addresses.isEmpty() ? 0 : Integer.parseInt(addresses.get(addresses.size() - 1).getId());
 		Address address = new Address();
+		address.setId(++lastIndex + "");
 		System.out.print("First Name: ");
 		address.setFirstName(getString());
 		System.out.print("Last Name: ");
@@ -108,7 +111,12 @@ public class Addresses {
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
-			addresses.remove(getInt(0, addresses.size() - 1));
+			String input = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE) + "";
+			for (Address i : addresses) {
+				if (i.getId().equals(input))	addresses.remove(i);
+			}
+		} else {
+			System.err.println("Sorry,\n cannot delete entry form an empty database");
 		}
 	}
 
