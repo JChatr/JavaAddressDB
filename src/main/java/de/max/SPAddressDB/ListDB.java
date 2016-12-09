@@ -38,11 +38,10 @@ public class ListDB<T> implements Database<T> {
 	public List<T> get(String directory) {
 		// need to make sure path is valid
 		if (!validDir(directory)) return null;
-		
+		this.data = new ArrayList<>();
 		Path path= Paths.get(directory);
 		try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ);
 				ObjectInputStream ois = new ObjectInputStream(is)) {
-			this.data = new ArrayList<>();
 			while (true) {
 				T obj = (T) ois.readObject();
 				data.add(obj);
