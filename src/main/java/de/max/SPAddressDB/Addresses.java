@@ -1,9 +1,12 @@
 package de.max.SPAddressDB;
 
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Addresses {
 	private Scanner scan = new Scanner(System.in);
@@ -37,7 +40,7 @@ public class Addresses {
 		System.out.println("4: Exit");
 
 		System.out.print("Your choice: ");
-		switch (getInt(0, 4)) {
+		switch (getInt(0, 4)[0]) {
 			case Integer.MIN_VALUE :
 				System.out.println("\n");
 			case 0 :
@@ -162,20 +165,19 @@ public class Addresses {
 	 * @param rangeMax
 	 * @return
 	 */
-	private int getInt(int rangeMin, int rangeMax) {
-		int input = 0;
+	private int[] getInt(int rangeMin, int rangeMax) {
+		int[] input;
 		try {
-			input = scan.nextInt();
+			input = getRange(scan.next());
 		} catch (InputMismatchException e) {
-			System.err.print("Your input is not a number \nTry again: ");
+			System.err.print("Your input is not valid \nTry again: ");
 			scan.nextLine();
 			return getInt(rangeMin, rangeMax);	
 		}
-		if (input >= rangeMin && input <= rangeMax) {
+		if (input.length !=0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
 			return input;
 		} else {
-			System.err.println("The input is in an invalid range");
-			System.err.print("Try again: ");
+			System.err.println("The input is in an invalid range\nTry again: ");
 			return getInt(rangeMin, rangeMax);
 		}
 	}
@@ -198,5 +200,46 @@ public class Addresses {
 			getString();
 		}
 		return out;
+	}
+	/**
+	 * does some basic parsing on the range
+	 * any parse exceptions will bubble up (NumberFormatExecption) 
+	 * @param in
+	 * @return
+	 * @throws InputMismatchException
+	 */
+	private int[] getRange(String in) {
+		try {
+			TreeSet<Integer> range = new TreeSet<>();
+			// do first split on input removing all explicit delimiter
+			String[] exp = in.split("\\;|\\.|,|&");
+			for (String i : exp) {
+				// split the already split input again to get any possible ranges
+				String[] tmp = i.split("\\D+");
+				if (tmp.length > 1) {
+					// if the input contains a separated list
+					for (String j : tmp) {
+						range.add(Integer.parseInt(j));
+					}
+				} else {
+					// if the input is a range
+					for (int k = Integer.parseInt(tmp[0]); k <= Integer.parseInt(tmp[tmp.length -1]); k++) {
+						range.add(k);
+					}
+				}
+			}
+			// painful conversion of the sorted set to an int[]
+			int[] out = new int[range.size()];
+			Iterator<Integer> it = range.iterator();
+			int i = 0;
+			while (it.hasNext()) {
+				out[i++] = it.next();
+			}
+			return out;
+		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			// this converts the out of bounds exception on a parse error to an 
+			// InputMismatch one to give some better context to what is going on
+			throw new InputMismatchException();
+		}
 	}
 }
