@@ -91,14 +91,14 @@ public class Addresses {
 		Address address = new Address();
 		address.setId(++lastIndex + "");
 		System.out.print("First Name: ");
-		address.setFirstName(getString());
+		address.setFirstName(getString(false));
 		System.out.print("Last Name: ");
-		address.setLastName(getString());
+		address.setLastName(getString(false));
 		System.out.print("Optional Email: ");
-		String a = getString();
+		String a = getString(true);
 		address.setEmail((a.equals("")) ? "-" : a);
 		System.out.print("Optional Phone: ");
-		String b = getString();
+		String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.add(address);
 	}
@@ -132,7 +132,7 @@ public class Addresses {
 
 	private void search() {
 		System.out.print("Enter your search query: ");
-		String mask = getString();
+		String mask = getString(false);
 		System.out.println("Matching the Database by " + mask);
 		System.out.println();
 		Menu.head();
@@ -176,9 +176,9 @@ public class Addresses {
 		int[] input;
 		try {
 			input = getRange(scan.next());
+			scan.nextLine();
 		} catch (InputMismatchException e) {
 			System.err.print("Your input is not valid \nTry again: ");
-			scan.nextLine();
 			return getInt(rangeMin, rangeMax);	
 		}
 		if (input.length !=0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
@@ -193,18 +193,18 @@ public class Addresses {
 	 * 
 	 * @return
 	 */
-	private String getString() {
+	private String getString(boolean optionalField) {
 		String out = "";
 		try {
-			out = scan.next();
-			if (out.equals("")) {
+			out = scan.nextLine();
+			if (!optionalField && out.equals("")) {
 				System.err.println("Invalid input");
-				getString();
+				getString(optionalField);
 			} else
 				return out;
 		} catch (NoSuchElementException e) {
 			System.err.println("Invalid input");
-			getString();
+			getString(optionalField);
 		}
 		return out;
 	}
