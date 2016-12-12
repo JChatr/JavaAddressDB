@@ -71,7 +71,7 @@ public class UserInteract {
 		UI.head();
 		int len = addresses.size();
 		// loop through the list with the offset of start
-		// only display the elements from start -> start + listLen
+		// only display the elements from start -> start + displayLen
 		for (int i = start; i < Math.min(displayLen + start, len); i++) {
 			Address j = addresses.get(i + "");
 			if (j == null) continue;
@@ -92,10 +92,14 @@ public class UserInteract {
 	private void createEntry() {
 		// this is one of the dirtiest workarounds I have seen in a long time 
 		// FUCK JAVA <--
-		// to get a key at an index from a hash map I have to convert all keys to an arrayList and then get
+		// to get the last element from a hash map I have to convert all keys to an arrayList and then get
 		// the element i want from that list
-		if (addresses.isEmpty()) {lastIndex = 0;}
-		else {lastIndex = Integer.parseInt(new ArrayList<>(addresses.keySet()).get(addresses.size() - 1));}
+		// FUCK JAVA <--
+		if (addresses.isEmpty()) {
+			lastIndex = 0;
+		} else {
+			lastIndex = Integer.parseInt(new ArrayList<>(addresses.keySet()).get(addresses.size() - 1));
+		}
 		Address address = new Address();
 		address.setId(++lastIndex + "");
 			System.out.print("First Name: ");
@@ -121,17 +125,12 @@ public class UserInteract {
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
-			int[] input = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
-//			for (int i : input) {
-//				addresses.
-//				for (Address j : addresses) {
-//					if (j.getId().equals(i + "")){
-//						deletion.add(j);
-//						removed++;
-//					}
-//				}
-//			}
-			// objects have to be deleted like this because of concurrency issues
+			for (int i : getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)) {
+				Address j = addresses.get(i + "");
+				if (j == null) continue;
+				addresses.remove(i + "");
+				removed++;
+			}
 			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
 			System.err.println("Sorry,\n cannot delete entrys form an empty database");
