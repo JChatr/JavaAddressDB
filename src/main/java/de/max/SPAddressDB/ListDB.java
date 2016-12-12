@@ -17,7 +17,7 @@ public class ListDB<T> implements Database<T> {
 
 	private List<T> data;
 	// default dir is in a .txt in the parent folder of the .jar
-	private String globalDir = "."+ File.separator + "DB.txt";
+	private String globalDir = "DB.txt";
 
 	public ListDB() {
 		get();
@@ -37,7 +37,7 @@ public class ListDB<T> implements Database<T> {
 	@Override
 	public List<T> get(String directory) {
 		// need to make sure path is valid
-		if (!validDir(directory)) return null;
+		//if (!validDir(directory)) return null;
 		this.data = new ArrayList<>();
 		Path path= Paths.get(directory);
 		try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ);
