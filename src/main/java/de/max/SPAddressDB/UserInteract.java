@@ -13,11 +13,11 @@ import java.util.TreeSet;
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// always up to date list
-	private Map<Integer, Address> addresses;
+	private Map<String, Address> addresses;
 	// periodically updated list
-	private Database<Integer, Address> db = new MapDB<>();
+	private Database<String, Address> db = new MapDB<>();
 	private int lastIndex;
-	private final int listLen = 10;
+	private final int displayLen = 10;
 
 	public void run() {
 		System.out.println("*-------------------------*");
@@ -39,7 +39,6 @@ public class UserInteract {
 		System.out.println("1: Search the Database");
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
-//		System.out.println("3.1: Penis");
 		System.out.println("4: Exit");
 
 		System.out.print("Your choice: ");
@@ -73,14 +72,14 @@ public class UserInteract {
 		int len = addresses.size();
 		// loop through the list with the offset of start
 		// only display the elements from start -> start + listLen
-		for (int i = start; i < Math.min(listLen + start, len); i++) {
-			Address j = addresses.get(new Integer(i));
-//			if (j == null) return;
+		for (int i = start; i < Math.min(displayLen + start, len); i++) {
+			Address j = addresses.get(i + "");
+			if (j == null) continue;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		if (len - 1 > 10) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", start / listLen + 1, addresses.size() / listLen + 1);
-			start = getInt(0, addresses.size() / listLen + 1)[0] - 1;
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", start / displayLen + 1, addresses.size() / displayLen + 1);
+			start = getInt(0, addresses.size() / displayLen + 1)[0] - 1;
 			if (start != -1) {
 				browse(start*10);
 			}
@@ -96,7 +95,7 @@ public class UserInteract {
 		// to get a key at an index from a hash map I have to convert all keys to an arrayList and then get
 		// the element i want from that list
 		if (addresses.isEmpty()) {lastIndex = 0;}
-		else {lastIndex = new ArrayList<>(addresses.keySet()).get(addresses.size() - 1);}
+		else {lastIndex = Integer.parseInt(new ArrayList<>(addresses.keySet()).get(addresses.size() - 1));}
 		Address address = new Address();
 		address.setId(++lastIndex + "");
 			System.out.print("First Name: ");
@@ -109,7 +108,7 @@ public class UserInteract {
 			System.out.print("Optional Phone: ");
 			String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
-		addresses.put(new Integer(lastIndex), address);
+		addresses.put(lastIndex + "", address);
 	}
 
 	/**
@@ -145,7 +144,7 @@ public class UserInteract {
 		System.out.println("Matching the Database by " + mask);
 		System.out.println();
 		UI.head();
-		for (Map.Entry<Integer, Address> i : addresses.entrySet()) {
+		for (Map.Entry<String, Address> i : addresses.entrySet()) {
 			Address ad = i.getValue();
 			if (ad.search(mask)) {
 				UI.row(i.getKey() + "", ad.getFirstName(), ad.getLastName(), ad.getEmail(), ad.getPhone());
