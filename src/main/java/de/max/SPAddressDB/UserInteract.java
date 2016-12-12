@@ -3,12 +3,12 @@ package de.max.SPAddressDB;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
@@ -17,7 +17,7 @@ public class UserInteract {
 	// periodically updated list
 	private Database<String, Address> db = new MapDB<>();
 	private int lastIndex;
-	private final int displayLen = 10;
+	private final int displayLen = 5;
 
 	public void run() {
 		System.out.println("*-------------------------*");
@@ -66,22 +66,27 @@ public class UserInteract {
 	/**
 	 * prints the current database to the console
 	 */
-	private void browse(int start) {
+	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
-		UI.head();
-		int len = addresses.size();
+		UI.head();		
 		// loop through the list with the offset of start
 		// only display the elements from start -> start + displayLen
-		for (int i = start; i <= Math.min(displayLen + start, len); i++) {
-			Address j = addresses.get(i + "");
-			if (j == null) continue;
-			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
+		int first = Integer.parseInt(addresses.keySet().iterator().next());
+		offset = first;
+		for (Address i : addresses.values()) {
+			UI.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
+			if (++offset - first == displayLen) break;
 		}
-		if (len - 1 > 10) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", start / displayLen + 1, addresses.size() / displayLen + 1);
-			start = getInt(0, addresses.size() / displayLen + 1)[0] - 1;
-			if (start != -1) {
-				browse(start*10);
+		// get last element 
+		String last = "";
+		for (String j : addresses.keySet()) { last = (j != null) ? j : last; }
+		
+		if (offset < Integer.parseInt(last)) {
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (offset - first) / displayLen + 1, Integer.parseInt(last) / displayLen + 1);
+			offset = getInt(0, Integer.parseInt(last) / displayLen + 1)[0];
+			// exit on 0
+			if (offset != 0) {
+				browse(offset++);
 			}
 		}
 	}
@@ -121,7 +126,6 @@ public class UserInteract {
 	private void deleteEntry() {
 		int removed = 0;
 		if (!isEmpty()) {
-			List<Address> deletion = new ArrayList<>();
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
