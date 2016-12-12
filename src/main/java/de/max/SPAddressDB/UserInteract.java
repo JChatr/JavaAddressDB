@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeSet;
 
-public class Addresses {
+public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// always up to date list
-	private List<Address> addresses;
+	private Map<Integer, Address> addresses;
 	// periodically updated list
-	private Database<Address> db = new ListDB<>();
+	private Database<Integer, Address> db = new MapDB<>();
 	private int lastIndex;
 	private final int listLen = 10;
 
@@ -37,6 +39,7 @@ public class Addresses {
 		System.out.println("1: Search the Database");
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
+//		System.out.println("3.1: Penis");
 		System.out.println("4: Exit");
 
 		System.out.print("Your choice: ");
@@ -66,13 +69,14 @@ public class Addresses {
 	 */
 	private void browse(int start) {
 		System.out.println("\nCurrent records:");
-		Menu.head();
+		UI.head();
 		int len = addresses.size();
 		// loop through the list with the offset of start
 		// only display the elements from start -> start + listLen
 		for (int i = start; i < Math.min(listLen + start, len); i++) {
-			Address j = addresses.get(i);
-			Menu.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
+			Address j = addresses.get(new Integer(i));
+//			if (j == null) return;
+			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		if (len - 1 > 10) {
 			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", start / listLen + 1, addresses.size() / listLen + 1);
@@ -87,20 +91,25 @@ public class Addresses {
 	 * gets user input for the entry
 	 */
 	private void createEntry() {
-		lastIndex = addresses.isEmpty() ? 0 : Integer.parseInt(addresses.get(addresses.size() - 1).getId());
+		// this is one of the dirtiest workarounds I have seen in a long time 
+		// FUCK JAVA <--
+		// to get a key at an index from a hash map I have to convert all keys to an arrayList and then get
+		// the element i want from that list
+		if (addresses.isEmpty()) {lastIndex = 0;}
+		else {lastIndex = new ArrayList<>(addresses.keySet()).get(addresses.size() - 1);}
 		Address address = new Address();
 		address.setId(++lastIndex + "");
-		System.out.print("First Name: ");
+			System.out.print("First Name: ");
 		address.setFirstName(getString(false));
-		System.out.print("Last Name: ");
+			System.out.print("Last Name: ");
 		address.setLastName(getString(false));
-		System.out.print("Optional Email: ");
-		String a = getString(true);
+			System.out.print("Optional Email: ");
+			String a = getString(true);
 		address.setEmail((a.equals("")) ? "-" : a);
-		System.out.print("Optional Phone: ");
-		String b = getString(true);
+			System.out.print("Optional Phone: ");
+			String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
-		addresses.add(address);
+		addresses.put(new Integer(lastIndex), address);
 	}
 
 	/**
@@ -114,16 +123,16 @@ public class Addresses {
 			browse(0);
 			System.out.print("\nIndex of the Record to be deleted: ");
 			int[] input = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
-			for (int i : input) {
-				for (Address j : addresses) {
-					if (j.getId().equals(i + "")){
-						deletion.add(j);
-						removed++;
-					}
-				}
-			}
+//			for (int i : input) {
+//				addresses.
+//				for (Address j : addresses) {
+//					if (j.getId().equals(i + "")){
+//						deletion.add(j);
+//						removed++;
+//					}
+//				}
+//			}
 			// objects have to be deleted like this because of concurrency issues
-			addresses.removeAll(deletion);
 			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
 			System.err.println("Sorry,\n cannot delete entrys form an empty database");
@@ -135,10 +144,11 @@ public class Addresses {
 		String mask = getString(false);
 		System.out.println("Matching the Database by " + mask);
 		System.out.println();
-		Menu.head();
-		for (Address i : addresses) {
-			if (i.search(mask)) {
-				Menu.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
+		UI.head();
+		for (Map.Entry<Integer, Address> i : addresses.entrySet()) {
+			Address ad = i.getValue();
+			if (ad.search(mask)) {
+				UI.row(i.getKey() + "", ad.getFirstName(), ad.getLastName(), ad.getEmail(), ad.getPhone());
 			}
 		}
 	}
@@ -221,7 +231,7 @@ public class Addresses {
 	 */
 	private int[] getRange(String in) {
 		try {
-			TreeSet<Integer> range = new TreeSet<>();
+			Set<Integer> range = new TreeSet<>();
 			// do first split on input removing all explicit delimiter
 			String[] exp = in.split("\\;|\\.|,|&");
 			for (String i : exp) {

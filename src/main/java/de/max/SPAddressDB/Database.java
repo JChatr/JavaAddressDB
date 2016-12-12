@@ -1,16 +1,16 @@
 package de.max.SPAddressDB;
 
-import java.util.List;
+import java.util.Map;
 
-public interface Database<T> {
+public interface Database<K, V> {
 
-	public List<T> get();
+	public Map<K, V> get();
 
-	public List<T> get(String directory);
+	public Map<K, V> get(String directory);
 
 	public boolean push();
 
 	public boolean push(String directory);
 
-	public boolean update(List<T> data);
+	public boolean update(Map<K ,V> data);
 }
