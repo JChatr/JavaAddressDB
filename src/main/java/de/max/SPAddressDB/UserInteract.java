@@ -72,7 +72,7 @@ public class UserInteract {
 		int len = addresses.size();
 		// loop through the list with the offset of start
 		// only display the elements from start -> start + displayLen
-		for (int i = start; i < Math.min(displayLen + start, len); i++) {
+		for (int i = start; i <= Math.min(displayLen + start, len); i++) {
 			Address j = addresses.get(i + "");
 			if (j == null) continue;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
@@ -216,9 +216,6 @@ public class UserInteract {
 		}
 		return out;
 	}
-	
-
-	
 	
 	/**
 	 * does some basic parsing on the range
