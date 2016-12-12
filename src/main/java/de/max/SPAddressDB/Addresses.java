@@ -41,8 +41,6 @@ public class Addresses {
 
 		System.out.print("Your choice: ");
 		switch (getInt(0, 4)[0]) {
-			case Integer.MIN_VALUE :
-				System.out.println("\n");
 			case 0 :
 				browse(0);
 				break;
@@ -78,12 +76,25 @@ public class Addresses {
 		}
 		// if there's entries that have not been displayed ask the user if he
 		// wants to see the next page
-		if (len - 1 > start + listLen) {
-			System.out.format("Page (%d/%d) Show More (Y/N)?: ", start / listLen + 1, addresses.size() / listLen + 1);
-			if (getString().toUpperCase().equals("Y")) {
-				browse(start + listLen);
+//		if (len - 1 > start + listLen) {
+//			System.out.format("Page (%d/%d) Show More (Y/N)?: ", start / listLen + 1, addresses.size() / listLen + 1);
+//			if (getString().toUpperCase().equals("Y")) {
+//				System.out.println(listLen);
+//				browse(start + listLen);
+//			}
+//		}
+		
+		if (len - 1 > 10) {
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", start / listLen + 1, addresses.size() / listLen + 1);
+			start = getInt(0, addresses.size() / listLen + 1)[0];
+			if (start==0) {
+			} else{
+				browse((start*10)-10);
 			}
 		}
+		
+		
+		
 	}
 
 	/**
@@ -211,6 +222,10 @@ public class Addresses {
 		}
 		return out;
 	}
+	
+
+	
+	
 	/**
 	 * does some basic parsing on the range
 	 * any parse exceptions will bubble up (NumberFormatExecption) 
