@@ -39,7 +39,7 @@ public class DatabaseTests {
 		String path = "";
 		Path p = Paths.get("5535235235");
 		Database<String> db = new ListDB<>(path);
-		assertNull(db.get(path));
+		assertNull(db.get());
 		File rem = new File(path);
 		rem.delete();
 	}
