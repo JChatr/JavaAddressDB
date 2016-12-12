@@ -179,7 +179,6 @@ public class Addresses {
 			scan.nextLine();
 		} catch (InputMismatchException e) {
 			System.err.print("Your input is not valid \nTry again: ");
-			
 			return getInt(rangeMin, rangeMax);	
 		}
 		if (input.length !=0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
