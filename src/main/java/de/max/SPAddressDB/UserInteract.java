@@ -3,6 +3,7 @@ package de.max.SPAddressDB;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -68,17 +69,16 @@ public class UserInteract {
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
-		UI.head();		
-		// loop through the map and start printing at the offset value until the offset is reached
-		int i = 0;
+		List<Address> list = new ArrayList<>(addresses.values());
 		int draw = offset;
-		for (i = offset; draw < displayLen + offset; ) {
-			Address j = addresses.get(i++ + "");
+		UI.head();
+		// loop through the map and start printing at the offset value until the offset is reached
+		list = list.subList(offset, addresses.size());
+		for (Address j : list) {
 			// is the current local index null?
 			if (j == null) continue;
-			draw++;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
-			if (i > addresses.size() * addresses.size()) break; 
+			if (++draw == displayLen) break; 
 		}
 		if (draw < addresses.size()) {
 			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
