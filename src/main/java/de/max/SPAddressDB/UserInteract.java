@@ -69,24 +69,21 @@ public class UserInteract {
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
 		UI.head();		
-		// loop through the list with the offset of start
-		// only display the elements from start -> start + displayLen
-		int k = offset;
+		// loop through the map and start printing at the offset value until the offset is reached
+		int k = 0;
 		for (Address i : addresses.values()) {
-			if (k++ >= offset && k < offset + displayLen) {
+			if (k++ >= offset && k <= offset + displayLen){
 				UI.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());	
 			}
-			if (k == displayLen) break;
+			if (k > offset + displayLen) {
+				break;
+			}
 		}
-		// get last element 
-		String last = "";
-		for (String j : addresses.keySet()) { last = (j != null) ? j : last; }
-		
-		if (k < Integer.parseInt(last)) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", offset / displayLen, addresses.size() / displayLen);
+		if (k < addresses.size()) {
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", k / displayLen, addresses.size() / displayLen);
 			offset = getInt(0, addresses.size() / displayLen)[0];
 			// exit on 0
-			if (offset != 0) { browse(offset * displayLen); }
+			if (offset != 0) { browse((offset - 1) * displayLen); }
 		}
 	}
 
