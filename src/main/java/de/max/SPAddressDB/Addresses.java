@@ -38,9 +38,10 @@ public class Addresses {
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
 		System.out.println("4: Exit");
-
+		System.out.println("5: Modify existing entry");
+		
 		System.out.print("Your choice: ");
-		switch (getInt(0, 4)[0]) {
+		switch (getInt(0, 5)[0]) {
 			case 0 :
 				browse(0);
 				break;
@@ -56,6 +57,9 @@ public class Addresses {
 			case 4 :
 				exit();
 				return;
+			case 5 :
+				modifyEntry();
+				break;
 		}
 		db.update(addresses);
 		mainMenu();
@@ -101,6 +105,42 @@ public class Addresses {
 		String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.add(address);
+	}
+	
+	private void modifyEntry(){
+		if (!isEmpty()) {
+			System.out.println("Current Records:");
+			browse(0);
+			System.out.print("\nIndex of the Record to be edited: ");
+			int input[] = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
+			
+			Address temp = addresses.get(input[0]);
+			System.out.println("You can now edit the fields. Leave out fields to keep old data.");
+			System.out.println("First Name: ");
+			String in = getString(true);
+			if(!in.equals("")){
+				temp.setFirstName(in);
+			}
+			System.out.println("Last Name: ");
+			in = getString(true);
+			if(!in.equals("")){
+				temp.setLastName(in);
+			}
+			System.out.println("Optional Email: ");
+			in = getString(true);
+			if(!in.equals("")){
+				temp.setEmail(in);
+			}
+			System.out.println("Optional Phone: ");
+			in = getString(true);
+			if(!in.equals("")){
+				temp.setPhone(in);
+			}
+			
+			
+			
+		
+		}
 	}
 
 	/**
@@ -159,7 +199,7 @@ public class Addresses {
 	 */
 	private boolean isEmpty() {
 		if (addresses.isEmpty()) {
-			System.err.println("\nThere are no addresses to delete\n");
+			System.err.println("\nThere are no addresses!\n");
 			return true;
 		} else {
 			return false;
