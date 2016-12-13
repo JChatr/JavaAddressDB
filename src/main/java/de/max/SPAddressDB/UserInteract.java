@@ -71,23 +71,22 @@ public class UserInteract {
 		UI.head();		
 		// loop through the list with the offset of start
 		// only display the elements from start -> start + displayLen
-		int first = Integer.parseInt(addresses.keySet().iterator().next());
-		offset = first;
+		int k = offset;
 		for (Address i : addresses.values()) {
-			UI.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());
-			if (++offset - first == displayLen) break;
+			if (k++ >= offset && k < offset + displayLen) {
+				UI.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());	
+			}
+			if (k == displayLen) break;
 		}
 		// get last element 
 		String last = "";
 		for (String j : addresses.keySet()) { last = (j != null) ? j : last; }
 		
-		if (offset < Integer.parseInt(last)) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (offset - first) / displayLen + 1, Integer.parseInt(last) / displayLen + 1);
-			offset = getInt(0, Integer.parseInt(last) / displayLen + 1)[0];
+		if (k < Integer.parseInt(last)) {
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", offset / displayLen, addresses.size() / displayLen);
+			offset = getInt(0, addresses.size() / displayLen)[0];
 			// exit on 0
-			if (offset != 0) {
-				browse(offset++);
-			}
+			if (offset != 0) { browse(offset * displayLen); }
 		}
 	}
 
