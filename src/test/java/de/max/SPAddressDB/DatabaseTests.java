@@ -16,39 +16,39 @@ public class DatabaseTests {
 	/**
 	 * tests weather the vals that get written are also read
 	 */
-	@Test
-	public void writeRand() {
-		int tests = 100;
-		Database<String> db = new ListDB<>(path);
-		List<String> l = new ArrayList<>();
-		Random r = new Random();
-		
-		for (int i = 1; i < tests + 1; i++) {
-			l.add(r.nextInt(i * i) + "");
-			db.update(l);
-		}
-		assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
-		File rem = new File(path);
-		rem.delete();
-	}
+//	@Test
+//	public void writeRand() {
+//		int tests = 100;
+//		Database<String> db = new ListDB<>(path);
+//		List<String> l = new ArrayList<>();
+//		Random r = new Random();
+//		
+//		for (int i = 1; i < tests + 1; i++) {
+//			l.add(r.nextInt(i * i) + "");
+//			db.update(l);
+//		}
+//		assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
+//		File rem = new File(path);
+//		rem.delete();
+//	}
 	/**
 	 * tests for invalid paths
 	 */
-	@Test
-	public void invalidPathGet1() {
-		String path = "";
-		Path p = Paths.get("5535235235");
-		Database<String> db = new ListDB<>(path);
-		assertNull(db.get(path));
-		File rem = new File(path);
-		rem.delete();
-	}
-	@Test
-	public void invalidPathGet2() {
-		String path = "/hom:e/max";
-		Database<String> db = new ListDB<>(path);
-		assertNull(db.get(path));
-		File rem = new File(path);
-		rem.delete();
-	}
+//	@Test
+//	public void invalidPathGet1() {
+//		String path = "";
+//		Path p = Paths.get("5535235235");
+//		Database<String> db = new MapDB<>(path);
+//		assertNull(db.get(path));
+//		File rem = new File(path);
+//		rem.delete();
+//	}
+//	@Test
+//	public void invalidPathGet2() {
+//		String path = "/hom:e/max";
+//		Database<String> db = new MapDB<>(path);
+//		assertNull(db.get(path));
+//		File rem = new File(path);
+//		rem.delete();
+//	}
 }
