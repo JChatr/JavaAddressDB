@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
@@ -99,7 +99,12 @@ public class UserInteract {
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
-			lastIndex = Integer.parseInt(new ArrayList<>(addresses.keySet()).get(addresses.size() - 1));
+			Supplier<Integer> supp = () -> {
+				String k = "";
+				for (String i : addresses.keySet()){
+					k = i;
+				}; return Integer.parseInt(k);};
+			lastIndex = supp.get();
 		}
 		Address address = new Address();
 		address.setId(++lastIndex + "");
