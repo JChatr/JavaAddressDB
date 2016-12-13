@@ -18,7 +18,7 @@ public class UserInteract {
 	// periodically updated list
 	private Database<String, Address> db = new MapDB<>();
 	private int lastIndex;
-	private final int displayLen = 5;
+	private final int displayLen = 10;
 
 	public void run() {
 		System.out.println("*-------------------------*");
