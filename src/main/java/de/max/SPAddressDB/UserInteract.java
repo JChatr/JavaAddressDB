@@ -70,19 +70,20 @@ public class UserInteract {
 		System.out.println("\nCurrent records:");
 		UI.head();		
 		// loop through the map and start printing at the offset value until the offset is reached
-		int k = 0;
-		for (Address i : addresses.values()) {
-			if (k++ >= offset && k <= offset + displayLen){
-				UI.row(i.getId(), i.getFirstName(), i.getLastName(), i.getEmail(), i.getPhone());	
-			}
-			if (k > offset + displayLen) {
-				break;
-			}
+		int i = 0;
+		int draw = offset;
+		for (i = offset; draw < displayLen + offset; ) {
+			Address j = addresses.get(i++ + "");
+			// is the current local index null?
+			if (j == null) continue;
+			draw++;
+			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
+			if (i > addresses.size() * addresses.size()) break; 
 		}
-		if (k < addresses.size()) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", k / displayLen, addresses.size() / displayLen);
-			offset = getInt(0, addresses.size() / displayLen)[0];
-			// exit on 0
+		if (draw < addresses.size()) {
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
+			offset = getInt(0, addresses.size() / displayLen + 1)[0];
+			// recurse if the user requests another page
 			if (offset != 0) { browse((offset - 1) * displayLen); }
 		}
 	}
