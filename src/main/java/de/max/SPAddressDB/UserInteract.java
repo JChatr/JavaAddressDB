@@ -34,7 +34,7 @@ public class UserInteract {
 	/**
 	 * recursive method that represents the main menu of the manager
 	 */
-	private void mainMenu() {
+	protected void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
 		System.out.println("0: Browse Database entries");
 		System.out.println("1: Search the Database");
@@ -67,7 +67,7 @@ public class UserInteract {
 	/**
 	 * prints the current database to the console
 	 */
-	private void browse(int offset) {
+	protected void browse(int offset) {
 		System.out.println("\nCurrent records:");
 		List<Address> list = new ArrayList<>(addresses.values());
 		int draw = offset;
@@ -91,7 +91,7 @@ public class UserInteract {
 	/**
 	 * gets user input for the entry
 	 */
-	private void createEntry() {
+	protected void createEntry() {
 		// this is one of the dirtiest workarounds I have seen in a long time 
 		// FUCK JAVA <--
 		// to get the last element from a hash map I have to convert all keys to an arrayList and then get
@@ -125,7 +125,7 @@ public class UserInteract {
 	/**
 	 * deletes records if there are any
 	 */
-	private void deleteEntry() {
+	protected void deleteEntry() {
 		int removed = 0;
 		if (!isEmpty()) {
 			System.out.println("Current Records:");
@@ -143,7 +143,7 @@ public class UserInteract {
 		}
 	}
 
-	private void search() {
+	protected void search() {
 		System.out.print("Enter your search query: ");
 		String mask = getString(false);
 		System.out.println("Matching the Database by " + mask);
@@ -160,7 +160,7 @@ public class UserInteract {
 	/**
 	 * cleans up
 	 */
-	private void exit() {
+	protected void exit() {
 		scan.close();
 		db.push();
 		System.out.println("until next time");
@@ -171,7 +171,7 @@ public class UserInteract {
 	 * 
 	 * @return
 	 */
-	private boolean isEmpty() {
+	protected boolean isEmpty() {
 		if (addresses.isEmpty()) {
 			System.err.println("\nThere are no addresses to delete\n");
 			return true;
@@ -186,7 +186,7 @@ public class UserInteract {
 	 * @param rangeMax
 	 * @return
 	 */
-	private int[] getInt(int rangeMin, int rangeMax) {
+	protected int[] getInt(int rangeMin, int rangeMax) {
 		int[] input;
 		try {
 			input = getRange(scan.next());
@@ -207,7 +207,7 @@ public class UserInteract {
 	 * 
 	 * @return
 	 */
-	private String getString(boolean optionalField) {
+	protected String getString(boolean optionalField) {
 		String out = "";
 		try {
 			out = scan.nextLine();
@@ -230,7 +230,7 @@ public class UserInteract {
 	 * @return
 	 * @throws InputMismatchException
 	 */
-	private int[] getRange(String in) {
+	protected int[] getRange(String in) {
 		try {
 			Set<Integer> range = new TreeSet<>();
 			// do first split on input removing all explicit delimiter
