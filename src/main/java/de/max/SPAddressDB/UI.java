@@ -3,7 +3,7 @@ package de.max.SPAddressDB;
 
 import java.util.Arrays;
 
-public class Menu {
+public class UI {
 
 	private final static int COLS = 5;
 	private final static int WIDTH = 15;
