@@ -108,9 +108,12 @@ public class UserInteract {
 				String k = "";
 				for (String i : addresses.keySet()){
 					k = i;
-				}; return Integer.parseInt(k);};
+				}; 
+			return Integer.parseInt(k);
+			};
 			lastIndex = supp.get();
 		}
+		
 		Address address = new Address();
 		address.setId(++lastIndex + "");
 			System.out.print("First Name: ");
@@ -131,7 +134,6 @@ public class UserInteract {
 			System.out.println("Current Records:");
 			browse(0);
 			System.out.print("\nIndex of the Record to be edited: ");
-//			int input[] = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
 			int entry = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)[0];
 			Address temp = addresses.get(entry + "");
 			while(temp == null){
