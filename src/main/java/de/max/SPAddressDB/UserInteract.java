@@ -40,8 +40,8 @@ public class UserInteract {
 		System.out.println("1: Search the Database");
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
-		System.out.println("4: Exit");
-		System.out.println("5: Modify existing entry");
+		System.out.println("4: Modify existing entry");
+		System.out.println("5: Exit");
 		
 		System.out.print("Your choice: ");
 		switch (getInt(0, 5)[0]) {
@@ -58,10 +58,10 @@ public class UserInteract {
 				deleteEntry();
 				break;
 			case 4 :
-				exit();
+				modifyEntry();
 				return;
 			case 5 :
-				modifyEntry();
+				exit();
 				break;
 		}
 		db.update(addresses);
