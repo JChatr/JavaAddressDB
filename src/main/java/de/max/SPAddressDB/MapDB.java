@@ -10,41 +10,42 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class ListDB<T> implements Database<T> {
+public class MapDB<K, V> implements Database<K ,V> {
 
-	private List<T> data;
+	private Map<K, V> data;
 	// default dir is in a .txt in the parent folder of the .jar
 	private String globalDir = "DB.txt";
 
-	public ListDB() {
+	public MapDB() {
 		get();
 	}
 	
-	public ListDB(String directory) {
+	public MapDB(String directory) {
 		this.globalDir = directory;
 		get();
 	}
 
 	@Override
-	public List<T> get() {
+	public Map<K, V> get() {
 		return get(globalDir);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> get(String directory) {
-		// need to make sure path is valid
-		//if (!validDir(directory)) return null;
-		this.data = new ArrayList<>();
-		Path path= Paths.get(directory);
+
+	public Map<K, V> get(String directory) {
+//		 need to make sure path is valid
+		if (!validDir(directory)) return null;
+		this.data = new LinkedHashMap<>();
+		Path path = Paths.get(directory);
 		try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ);
 				ObjectInputStream ois = new ObjectInputStream(is)) {
 			while (true) {
-				T obj = (T) ois.readObject();
-				data.add(obj);
+				V obj = (V) ois.readObject();
+				data.put((K) obj.toString(), obj);
 			}
 		} catch (ClassNotFoundException e) {
 		} catch (IOException e) {	
@@ -66,9 +67,9 @@ public class ListDB<T> implements Database<T> {
 //		if (!validDir(directory)) return false;
 		Path path = Paths.get(directory);
 		try (	OutputStream os = Files.newOutputStream(path, StandardOpenOption.CREATE);
-				ObjectOutputStream oos = new ObjectOutputStream(os)		) {
-			for (Object i : data) {
-				oos.writeObject(i);
+				ObjectOutputStream oos = new ObjectOutputStream(os)) 	{
+			for (Map.Entry<K, V>  i: data.entrySet()) {
+				oos.writeObject(i.getValue());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,7 +79,7 @@ public class ListDB<T> implements Database<T> {
 	}
 
 	@Override
-	public boolean update(List<T> data) {
+	public boolean update(Map<K, V> data) {
 		this.data = data;
 		return push();
 	}
