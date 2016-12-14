@@ -77,8 +77,8 @@ public class UserInteract {
 		for (Address j : list) {
 			// is the current local index null?
 			if (j == null) continue;
+			if (++draw == displayLen + offset) break;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
-			if (++draw == displayLen + offset) break; 
 		}
 		if (draw < addresses.size()) {
 			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
