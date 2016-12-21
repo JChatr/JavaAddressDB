@@ -40,11 +40,17 @@ public class UserInteract {
 		System.out.println("1: Search the Database");
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
-		System.out.println("4: Exit");
-
+		System.out.println("4: Modify an existing entry");
+		System.out.println("5: Exit");
+		
 		System.out.print("Your choice: ");
+<<<<<<< HEAD
 		switch (getInt(0, 4)[0]) {
 			case 0:
+=======
+		switch (getInt(0, 5)[0]) {
+			case 0 :
+>>>>>>> master
 				browse(0);
 				break;
 			case 1:
@@ -56,7 +62,14 @@ public class UserInteract {
 			case 3:
 				deleteEntry();
 				break;
+<<<<<<< HEAD
 			case 4:
+=======
+			case 4 :
+				modifyEntry();
+				break;
+			case 5 :
+>>>>>>> master
 				exit();
 				return;
 		}
@@ -93,7 +106,11 @@ public class UserInteract {
 	/**
 	 * gets user input for the entry
 	 */
+<<<<<<< HEAD
 	protected void createEntry() {
+=======
+	private void createEntry() {
+>>>>>>> master
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
@@ -101,14 +118,21 @@ public class UserInteract {
 				String k = "";
 				for (String i : addresses.keySet()) {
 					k = i;
+<<<<<<< HEAD
 				}
 				return Integer.parseInt(k);
+=======
+				}; 
+			return Integer.parseInt(k);
+>>>>>>> master
 			};
 			lastIndex = supp.get();
 		}
+		
 		Address address = new Address();
 		address.setId(++lastIndex + "");
 		System.out.print("First Name: ");
+<<<<<<< HEAD
 		address.setFirstName(getString(false));
 		System.out.print("Last Name: ");
 		address.setLastName(getString(false));
@@ -119,6 +143,52 @@ public class UserInteract {
 		String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.put(lastIndex + "", address);
+=======
+			address.setFirstName(getString(false));
+		System.out.print("Last Name: ");
+			address.setLastName(getString(false));
+		System.out.print("Optional Email: ");
+			String a = getString(true);
+			address.setEmail((a.equals("")) ? "-" : a);
+		System.out.print("Optional Phone: ");
+			String b = getString(true);
+			address.setPhone((b.equals("")) ? "-" : b);
+		addresses.put(lastIndex + "", address);
+	}
+	
+	private void modifyEntry(){
+		if (!isEmpty()) {
+			browse(0);
+			System.out.print("\nIndex of the Record to be edited: ");
+			int entry = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)[0];
+			Address temp = addresses.get(entry + "");
+			while(temp == null) {
+				System.out.println("Entry not found. Try again!");
+				entry = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)[0];
+				temp = addresses.get(entry + "");
+			}
+			
+			System.out.println("You can now edit the fields. Leave out fields to keep old data.");
+			System.out.print("First Name: ");
+				String in = getString(true);
+				if(!in.equals(""))	temp.setFirstName(in);
+			System.out.print("Last Name: ");
+				in = getString(true);
+				if(!in.equals(""))	temp.setLastName(in);
+			System.out.print("Optional Email: ");
+				in = getString(true);
+				if(!in.equals(""))	temp.setEmail(in);
+			System.out.print("Optional Phone: ");
+				in = getString(true);
+				if(!in.equals(""))	temp.setPhone(in);
+				
+			System.out.println("\n successfully modified the entry:");
+			UI.head();
+			UI.row(temp.getId(), temp.getFirstName(), temp.getLastName(), temp.getEmail(), temp.getPhone());
+		} else {
+			System.err.println("cannod modify entries of an empty database");;
+		}
+>>>>>>> master
 	}
 
 	/**
@@ -172,7 +242,7 @@ public class UserInteract {
 	 */
 	protected boolean isEmpty() {
 		if (addresses.isEmpty()) {
-			System.err.println("\nThere are no addresses to delete\n");
+			System.err.println("\nThere are no addresses!\n");
 			return true;
 		} else {
 			return false;
@@ -210,7 +280,7 @@ public class UserInteract {
 			out = scan.nextLine();
 			if (!optionalField && out.equals("")) {
 				System.err.println("Invalid input");
-				getString(optionalField);
+				out = getString(optionalField);
 			} else
 				return out;
 		} catch (NoSuchElementException e) {
