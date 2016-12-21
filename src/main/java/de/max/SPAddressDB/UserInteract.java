@@ -20,6 +20,10 @@ public class UserInteract {
 	private int lastIndex;
 	private final int displayLen = 10;
 
+	/**
+	 * This method is used to print the header,
+	 * gets the database and starts the mainMenu method.
+	 */
 	public void run() {
 		System.out.println("*-------------------------*");
 		System.out.println("|                         |");
@@ -32,7 +36,9 @@ public class UserInteract {
 	}
 
 	/**
-	 * recursive method that represents the main menu of the manager
+	 * This method is used to print the main menu.
+	 * You are able to choose from an main menu entry.
+	 * This method is recursive, it will only end when entry '5' is chosen. 
 	 */
 	private void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
@@ -69,7 +75,9 @@ public class UserInteract {
 	}
 
 	/**
-	 * prints the current database to the console
+	 * This method is used to print the database into the console.
+	 * It will start at the offset 'offset' and will print 10 entries.
+	 * @param Starts at the offset 'offset'.
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
@@ -93,7 +101,8 @@ public class UserInteract {
 	}
 
 	/**
-	 * gets user input for the entry
+	 * This method is used to create a new entry in the database.
+	 * The user will be asked to enter the first name, last name and optional the email and phone number.
 	 */
 	private void createEntry() {
 		if (addresses.isEmpty()) {
@@ -124,6 +133,9 @@ public class UserInteract {
 		addresses.put(lastIndex + "", address);
 	}
 	
+	/**
+	 * This method is used to modify an existing entry.
+	 */
 	private void modifyEntry(){
 		if (!isEmpty()) {
 			browse(0);

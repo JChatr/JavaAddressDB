@@ -10,6 +10,9 @@ public class UI {
 	private final static String COL = getCol(WIDTH);
 	private final static String SEP = "|";
 
+	/**
+	 * This method is used to create the header 
+	 */
 	public static void head() {
 		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
 		row(in);

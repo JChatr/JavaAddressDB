@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryIteratorException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,20 +20,34 @@ public class MapDB<K, V> implements Database<K ,V> {
 	// default dir is in a .txt in the parent folder of the .jar
 	private String globalDir = "."+ File.separator + "DB.txt";
 
+	/**
+	 * This method is used to get the Map.
+	 */
 	public MapDB() {
 		get();
 	}
 	
+	/**
+	 * This method is used to set the directory and get the map.
+	 * @param Sets the directory to 'directory'.
+	 */
 	public MapDB(String directory) {
 		this.globalDir = directory;
 		get();
 	}
 
+	/**
+	 * This method is used to  override the method get() and gets the map.
+	 * @return Returns the map with the directory 'globalDir'.
+	 */
 	@Override
 	public Map<K, V> get() {
 		return get(globalDir);
 	}
 
+	/**
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<K, V> get(String directory) {
