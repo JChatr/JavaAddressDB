@@ -10,8 +10,7 @@ public class Address implements Serializable {
 	private Map<Enum, String> data = new LinkedHashMap<>();
 
 	/**
-	 * enum to provide type safety (and to keep Key IDs consistant)
-	 *
+	 * enum to provide type safety (and to keep Key IDs consistent)
 	 * @author max
 	 */
 	public enum Types {
