@@ -44,19 +44,19 @@ public class UserInteract {
 
 		System.out.print("Your choice: ");
 		switch (getInt(0, 4)[0]) {
-			case 0 :
+			case 0:
 				browse(0);
 				break;
-			case 1 :
+			case 1:
 				search();
 				break;
-			case 2 :
+			case 2:
 				createEntry();
 				break;
-			case 3 :
+			case 3:
 				deleteEntry();
 				break;
-			case 4 :
+			case 4:
 				exit();
 				return;
 		}
@@ -84,7 +84,9 @@ public class UserInteract {
 			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
 			offset = getInt(0, addresses.size() / displayLen + 1)[0];
 			// recurse if the user requests another page
-			if (offset != 0) { browse((offset - 1) * displayLen); }
+			if (offset != 0) {
+				browse((offset - 1) * displayLen);
+			}
 		}
 	}
 
@@ -92,32 +94,29 @@ public class UserInteract {
 	 * gets user input for the entry
 	 */
 	protected void createEntry() {
-		// this is one of the dirtiest workarounds I have seen in a long time 
-		// FUCK JAVA <--
-		// to get the last element from a hash map I have to convert all keys to an arrayList and then get
-		// the element i want from that list
-		// FUCK JAVA <--
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
 			Supplier<Integer> supp = () -> {
 				String k = "";
-				for (String i : addresses.keySet()){
+				for (String i : addresses.keySet()) {
 					k = i;
-				}; return Integer.parseInt(k);};
+				}
+				return Integer.parseInt(k);
+			};
 			lastIndex = supp.get();
 		}
 		Address address = new Address();
 		address.setId(++lastIndex + "");
-			System.out.print("First Name: ");
+		System.out.print("First Name: ");
 		address.setFirstName(getString(false));
-			System.out.print("Last Name: ");
+		System.out.print("Last Name: ");
 		address.setLastName(getString(false));
-			System.out.print("Optional Email: ");
-			String a = getString(true);
+		System.out.print("Optional Email: ");
+		String a = getString(true);
 		address.setEmail((a.equals("")) ? "-" : a);
-			System.out.print("Optional Phone: ");
-			String b = getString(true);
+		System.out.print("Optional Phone: ");
+		String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.put(lastIndex + "", address);
 	}
@@ -168,7 +167,7 @@ public class UserInteract {
 
 	/**
 	 * checks weather addresses is empty and prints error
-	 * 
+	 *
 	 * @return
 	 */
 	protected boolean isEmpty() {
@@ -181,7 +180,6 @@ public class UserInteract {
 	}
 
 	/**
-	 * 
 	 * @param rangeMin
 	 * @param rangeMax
 	 * @return
@@ -193,9 +191,9 @@ public class UserInteract {
 			scan.nextLine();
 		} catch (InputMismatchException e) {
 			System.err.print("Your input is not valid \nTry again: ");
-			return getInt(rangeMin, rangeMax);	
+			return getInt(rangeMin, rangeMax);
 		}
-		if (input.length !=0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
+		if (input.length != 0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
 			return input;
 		} else {
 			System.err.println("The input is in an invalid range\nTry again: ");
@@ -204,7 +202,6 @@ public class UserInteract {
 	}
 
 	/**
-	 * 
 	 * @return
 	 */
 	protected String getString(boolean optionalField) {
@@ -222,10 +219,11 @@ public class UserInteract {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * does some basic parsing on the range
-	 * any parse exceptions will bubble up (NumberFormatExecption) 
+	 * any parse exceptions will bubble up (NumberFormatExecption)
+	 *
 	 * @param in
 	 * @return
 	 * @throws InputMismatchException
@@ -236,7 +234,7 @@ public class UserInteract {
 			// do first split on input removing all explicit delimiter
 			String[] exp = in.split("\\;|\\.|,|&");
 			for (String i : exp) {
-				// split the already split input again to get any possible ranges
+				// split the already split input again to type any possible ranges
 				String[] tmp = i.split("\\D+");
 				if (tmp.length > 2) {
 					// if the input contains a separated list
@@ -245,7 +243,7 @@ public class UserInteract {
 					}
 				} else {
 					// if the input is a range
-					for (int k = Integer.parseInt(tmp[0]); k <= Integer.parseInt(tmp[tmp.length -1]); k++) {
+					for (int k = Integer.parseInt(tmp[0]); k <= Integer.parseInt(tmp[tmp.length - 1]); k++) {
 						range.add(k);
 					}
 				}

@@ -2,11 +2,13 @@ package de.max.SPAddressDB;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.InputMismatchException;
 
 import org.junit.Test;
 
-public class InterfaceTests extends UserInteract {
+public class UserInteractTests extends UserInteract {
 
 	// testing of the getRange method
 	@Test
@@ -55,5 +57,5 @@ public class InterfaceTests extends UserInteract {
 		int[] a = {1,4,5,6,7,8,9,10};
 		assertArrayEquals(a, out);
 	}
-	
+
 }

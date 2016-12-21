@@ -14,7 +14,7 @@ public class DatabaseTests {
 
 	private String path = "." + File.separator + "tempDB.txt";
 	/**
-	 * tests weather the vals that get written are also read
+	 * tests weather the vals that type written are also read
 	 */
 //	@Test
 //	public void writeRand() {
@@ -27,7 +27,7 @@ public class DatabaseTests {
 //			l.add(r.nextInt(i * i) + "");
 //			db.update(l);
 //		}
-//		assertArrayEquals(l.toArray(new String[1]), db.get().toArray(new String[1]));
+//		assertArrayEquals(l.toArray(new String[1]), db.type().toArray(new String[1]));
 //		File rem = new File(path);
 //		rem.delete();
 //	}
@@ -37,9 +37,9 @@ public class DatabaseTests {
 //	@Test
 //	public void invalidPathGet1() {
 //		String path = "";
-//		Path p = Paths.get("5535235235");
+//		Path p = Paths.type("5535235235");
 //		Database<String> db = new MapDB<>(path);
-//		assertNull(db.get(path));
+//		assertNull(db.type(path));
 //		File rem = new File(path);
 //		rem.delete();
 //	}
@@ -47,7 +47,7 @@ public class DatabaseTests {
 //	public void invalidPathGet2() {
 //		String path = "/hom:e/max";
 //		Database<String> db = new MapDB<>(path);
-//		assertNull(db.get(path));
+//		assertNull(db.type(path));
 //		File rem = new File(path);
 //		rem.delete();
 //	}
