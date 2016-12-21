@@ -3,15 +3,11 @@ package de.max.SPAddressDB;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class MapDBTests {
 
@@ -20,11 +16,32 @@ public class MapDBTests {
 	 * tests weather the vals that type written are also read
 	 */
 	@Test
-	public void writeRand() {
+	public void writeInteger() {
 		String path = "." + File.separator + "tempDB.txt";
-		Database<String, String> db = new MapDB<>(path);
-
-
+		Database<String, Integer> db = new MapDB<>(path);
+		Map<String, Integer> map = new LinkedHashMap<>();
+		int runs = 100;
+		Random rand = new Random();
+		for (int i = 0; i < runs; i++) {
+			map.put(rand.nextInt() + "", rand.nextInt());
+			db.update(map);
+		}
+		assertArrayEquals(map.values().toArray(new Integer[1]), db.get().values().toArray(new Integer[1]));
+		File rem = new File(path);
+		rem.delete();
+	}
+	@Test
+	public void writeAddress() {
+		String path = "." + File.separator + "tempDB.txt";
+		Database<String, Address> db = new MapDB<>(path);
+		Map<String, Address> map = new LinkedHashMap<>();
+		int runs = 100;
+		Random rand = new Random();
+		for (int i = 0; i < runs; i++) {
+			map.put(rand.nextInt(10000) + "", new Address(i+ "", "John", "Doe", "jd@j.com","0125528"));
+			db.update(map);
+		}
+		assertArrayEquals(map.values().toArray(new Address[1]), db.get().values().toArray(new Address[1]));
 		File rem = new File(path);
 		rem.delete();
 	}
