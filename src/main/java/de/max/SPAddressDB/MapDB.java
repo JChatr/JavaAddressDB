@@ -86,7 +86,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	private boolean validDir(String directory) {
 		// current dir with out path extension
 		File dir = new File(directory.substring(0, directory.lastIndexOf(File.separator) + 1));
-		if (!dir.isDirectory()) return false;
-		return true;
+		// <3 IntelliJ
+		return !(!dir.isDirectory() || !dir.canRead() || !dir.canWrite());
 	}
 }
