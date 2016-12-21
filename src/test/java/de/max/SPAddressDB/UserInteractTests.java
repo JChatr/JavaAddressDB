@@ -35,22 +35,26 @@ public class UserInteractTests extends UserInteract {
 		int[] a = {1,5,8,9};
 		assertArrayEquals(a, out);
 	}
+
 	@Test(expected=InputMismatchException.class)
 	public void getRange5() {
 		int[] out = getRange("dcklsfksdf-asdasd");
 	}
+
 	@Test
 	public void getRange6() {
 		int[] out = getRange("1;5;8;9");
 		int[] a = {1,5,8,9};
 		assertArrayEquals(a, out);
 	}
+
 	@Test
 	public void getRange7() {
 		int[] out = getRange("1.5.8.9");
 		int[] a = {1,5,8,9};
 		assertArrayEquals(a, out);
 	}
+
 	@Test
 	public void getRange8() {
 		int[] out = getRange("6.5;4;1,5-10");
