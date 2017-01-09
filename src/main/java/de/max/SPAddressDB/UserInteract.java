@@ -57,7 +57,6 @@ public class UserInteract {
 			case 3:
 				deleteEntry();
 				break;
-
 			case 4:
 				modifyEntry();
 				break;
