@@ -67,13 +67,18 @@ public class MapDB<K, V> implements Database<K ,V> {
 		return this.data;
 	}
 
+	/**
+	 * This method is used to push the database.
+	 * @return Returns true if the push is successful. 
+	 */
 	@Override
 	public boolean push() {
 		return push(globalDir);
 	}
 
 	/**
-	 * serialize each address object to the specified directory
+	 * This method is used to push the database to a specific directory.
+	 * @return Returns true if the push is successful.
 	 */
 	@Override
 	public boolean push(String directory) {

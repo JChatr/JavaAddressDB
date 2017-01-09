@@ -22,7 +22,7 @@ public class UserInteract {
 
 	/**
 	 * This method is used to print the header,
-	 * gets the database and starts the mainMenu method.
+	 * get the database and start the mainMenu method.
 	 */
 	public void run() {
 		System.out.println("*-------------------------*");
@@ -37,8 +37,7 @@ public class UserInteract {
 
 	/**
 	 * This method is used to print the main menu.
-	 * You are able to choose from an main menu entry.
-	 * This method is recursive, it will only end when entry '5' is chosen. 
+	 * The user is able to choose from a main menu entry.
 	 */
 	private void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
