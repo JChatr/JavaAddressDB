@@ -16,6 +16,9 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void TestGetRange1To6V2() {
 		int[] out = getRange("1;6");
@@ -23,6 +26,9 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void TestGetRange6And1() {
 		int[] out = getRange("6;1");
@@ -30,6 +36,9 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void TestGetRangeSeperatedList1() {
 		int[] out = getRange("1,5,8,9");
@@ -37,11 +46,17 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 *
+	 */
 	@Test(expected = InputMismatchException.class)
 	public void TestGetRangeException() {
 		int[] out = getRange("dcklsfksdf-asdasd");
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void TestGetRangeSeperatedList2() {
 		int[] out = getRange("1;5;8;9");
@@ -49,6 +64,9 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 *
+	 */
 	@Test
 	public void TestGetRangeSperatedList3() {
 		int[] out = getRange("1.5.8.9");
@@ -56,6 +74,9 @@ public class UserInteractTests extends UserInteract {
 		assertArrayEquals(a, out);
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	public void TestGetRangeSperatedList4() {
 		int[] out = getRange("6.5;4;1,5-10");
