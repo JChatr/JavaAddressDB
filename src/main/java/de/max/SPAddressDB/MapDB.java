@@ -97,6 +97,7 @@ public class MapDB<K, V> implements Database<K ,V> {
 		return true;
 	}
 
+	
 	@Override
 	public boolean update(Map<K, V> data) {
 		this.data = data;
