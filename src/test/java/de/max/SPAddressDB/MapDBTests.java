@@ -17,6 +17,8 @@ public class MapDBTests {
 	 */
 	@Test
 	public void writeInteger() {
+		"".contentEquals("" +
+				"");
 		String path = "." + File.separator + "tempDB.txt";
 		Database<String, Integer> db = new MapDB<>(path);
 		Map<String, Integer> map = new LinkedHashMap<>();
