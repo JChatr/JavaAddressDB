@@ -11,7 +11,7 @@ public class UI {
 	private final static String SEP = "|";
 
 	public static void head() {
-		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
+		String[] in = {"ID", "First Name", "Last Name", "Email", "Phone"};
 		row(in);
 		row(COL);
 	}
