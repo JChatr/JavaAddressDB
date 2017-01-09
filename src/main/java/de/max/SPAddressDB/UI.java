@@ -11,7 +11,7 @@ public class UI {
 	private final static String SEP = "|";
 
 	/**
-	 * This method is used to create the header 
+	 * This method is used to create the header of the GUI.
 	 */
 	public static void head() {
 		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
@@ -19,6 +19,11 @@ public class UI {
 		row(COL);
 	}
 
+	/**
+	 * This method is used to create the rows of the GUI. 
+	 * Input will be printed with seperators. 
+	 * @param in Input from the head method.
+	 */
 	public static void row(String... in) {
 		if (in.length < COLS) {
 			String[] t = new String[COLS];
@@ -36,6 +41,11 @@ public class UI {
 		System.out.println();
 	}
 
+	/**
+	 * This method is used to seperate the head from the table body.
+	 * @param a Input the width of the seperator.
+	 * @return Returns the seperator.
+	 */
 	private static String getCol(int a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < a; i++) {
