@@ -18,7 +18,7 @@ public class MapDBTests {
 	 * tests weather the vals that type written are also read
 	 */
 	@Test
-	public void writeInteger() {
+	public void testWriteInteger() {
 		String path = "." + File.separator + "tempDB.txt";
 		Database<String, Integer> db = new MapDB<>(path);
 		Map<String, Integer> map = new LinkedHashMap<>();
@@ -37,7 +37,7 @@ public class MapDBTests {
 	 * tests for invalid paths
 	 */
 	@Test
-	public void invalidPathGet1() {
+	public void testInvalidPathGet1() {
 		String path = "";
 		Path p = Paths.get("5535235235/");
 		Database<String, String> db = new MapDB<>(path);
@@ -46,7 +46,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 	@Test
-	public void invalidPathGet2() {
+	public void testInvalidPathGet2() {
 		String path = "/hom:e/max/";
 		Database<String, String> db = new MapDB<>(path);
 		assertNull(db.get(path));
@@ -54,7 +54,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 	@Test
-	public void validPathGet() {
+	public void testValidPathGet() {
 		String path = "/home/max/";
 		Database<String, String> db = new MapDB<>(path);
 		assertNotNull(db.get(path));
@@ -62,7 +62,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 	@Test
-	public void validPathGet2() {
+	public void testValidPathGet2() {
 		String path = "/home/max/Desktop";
 		Database<String, String> db = new MapDB<>(path);
 		assertNotNull(db.get(path));
@@ -70,7 +70,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 	@Test
-	public void getPermissions() {
+	public void testGetPermissions() {
 		String path = "/opt/Krita/";
 		Database<String, String> db = new MapDB<>(path);
 		assertNull(db.get());
@@ -78,7 +78,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 	@Test
-	public void getPermissions2() {
+	public void testGetPermissions2() {
 		String path = "/";
 		Database<String, String> db = new MapDB<>(path);
 		assertNull(db.get());

@@ -16,7 +16,7 @@ public class UserInteractTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 
 	@Before
-	public void prepareOutputStream() {
+	public void prepareTests() {
 		System.setOut(new PrintStream(consoleOutput));
 		try {
 			Files.delete(Paths.get("." + File.separator + "DB.txt"));
@@ -25,7 +25,7 @@ public class UserInteractTests {
 	}
 
 	@After
-	public void resetOutputStream() {
+	public void resetTestPreparations() {
 		System.setOut(System.out);
 		try {
 			Files.delete(Paths.get("." + File.separator + "DB.txt"));

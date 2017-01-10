@@ -11,7 +11,7 @@ public class AddressTests {
 	 * checks for an arbitrary string
 	 */
 	@Test
-	public void TestFirstNameArbitraryString() {
+	public void testFirstNameArbitraryString() {
 		Address a = new Address();
 		a.setFirstName("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getFirstName());
@@ -22,7 +22,7 @@ public class AddressTests {
 	 * Checks for empty values
 	 */
 	@Test
-	public void TestFirstNameEmptyString() {
+	public void testFirstNameEmptyString() {
 		Address a = new Address();
 		a.setFirstName("");
 		assertEquals("", a.getFirstName());
@@ -33,7 +33,7 @@ public class AddressTests {
 	 * checks for unusual chars
 	 */
 	@Test
-	public void TestFirstNameUnusualString() {
+	public void testFirstNameUnusualString() {
 		Address a = new Address();
 		a.setFirstName("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getFirstName());
@@ -44,7 +44,7 @@ public class AddressTests {
 	 * checks for an arbitrary string
 	 */
 	@Test
-	public void TestLastNameArbitraryString() {
+	public void testLastNameArbitraryString() {
 		Address a = new Address();
 		a.setFirstName("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getFirstName());
@@ -55,7 +55,7 @@ public class AddressTests {
 	 * checks for an empty string
 	 */
 	@Test
-	public void TestLastNameEmptyString() {
+	public void testLastNameEmptyString() {
 		Address a = new Address();
 		a.setFirstName("");
 		assertEquals("", a.getFirstName());
@@ -66,7 +66,7 @@ public class AddressTests {
 	 * checks for unusual chars
 	 */
 	@Test
-	public void TestLastNameUnusualString() {
+	public void testLastNameUnusualString() {
 		Address a = new Address();
 		a.setFirstName("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getFirstName());
@@ -77,7 +77,7 @@ public class AddressTests {
 	 * checks for an arbitrary string
 	 */
 	@Test
-	public void TestEmailArbitraryString() {
+	public void testEmailArbitraryString() {
 		Address a = new Address();
 		a.setEmail("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getEmail());
@@ -88,7 +88,7 @@ public class AddressTests {
 	 * checks for an empty string
 	 */
 	@Test
-	public void TestEmailEmptyString() {
+	public void testEmailEmptyString() {
 		Address a = new Address();
 		a.setEmail("");
 		assertEquals("", a.getEmail());
@@ -99,7 +99,7 @@ public class AddressTests {
 	 * checks for unusual chars
 	 */
 	@Test
-	public void TestEmailUnusualString() {
+	public void testEmailUnusualString() {
 		Address a = new Address();
 		a.setEmail("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getEmail());
@@ -110,7 +110,7 @@ public class AddressTests {
 	 * checks for an arbitrary string
 	 */
 	@Test
-	public void TestPhoneArbitraryString() {
+	public void testPhoneArbitraryString() {
 		Address a = new Address();
 		a.setPhone("00255200");
 		assertEquals("00255200", a.getPhone());
@@ -121,7 +121,7 @@ public class AddressTests {
 	 * checks for an empty string
 	 */
 	@Test
-	public void TestPhoneEmptyString() {
+	public void testPhoneEmptyString() {
 		Address a = new Address();
 		a.setPhone("");
 		assertEquals("", a.getPhone());
@@ -132,7 +132,7 @@ public class AddressTests {
 	 * checks for unusual chars
 	 */
 	@Test
-	public void TestPhoneUnusualString() {
+	public void testPhoneUnusualString() {
 		Address a = new Address();
 		a.setPhone("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getPhone());
@@ -143,7 +143,7 @@ public class AddressTests {
 	 *
 	 */
 	@Test
-	public void TestAddressValueStore() {
+	public void testAddressValueStore() {
 		String id = "12";
 		String firstName = "awdawd";
 		String lastName = "gogrg";
@@ -163,7 +163,7 @@ public class AddressTests {
 	 * searches for the String "a"
 	 */
 	@Test
-	public void TestSearchStringO() {
+	public void testSearchStringO() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -178,7 +178,7 @@ public class AddressTests {
 	 * searches for the String "John"
 	 */
 	@Test
-	public void TestSearchStringJohn() {
+	public void testSearchStringJohn() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -194,7 +194,7 @@ public class AddressTests {
 	 * searches for the String "awlkkadwklawdl"
 	 */
 	@Test
-	public void TestSearchStringAwlkkadwklawdl() {
+	public void testSearchStringAwlkkadwklawdl() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -210,7 +210,7 @@ public class AddressTests {
 	 * searches for the String "-,-.-.;##+John"
 	 */
 	@Test
-	public void TestSearchStringUnusualValues() {
+	public void testSearchStringUnusualValues() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -226,7 +226,7 @@ public class AddressTests {
 	 * searches for the String "doe"
 	 */
 	@Test
-	public void TestSearchStringDoe() {
+	public void testSearchStringDoe() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -242,7 +242,7 @@ public class AddressTests {
 	 * searches for the String "COMPANY"
 	 */
 	@Test
-	public void TestSearchStringCOMPANY() {
+	public void testSearchStringCOMPANY() {
 		String id = "12";
 		String firstName = "John";
 		String lastName = "Doe";
@@ -258,7 +258,7 @@ public class AddressTests {
 	 * is called
 	 */
 	@Test
-	public void TestToStingTestID12() {
+	public void testToStingTestID12() {
 		String id = "12";
 		Address a = new Address();
 		a.setId(id);
@@ -269,7 +269,7 @@ public class AddressTests {
 	 * is called
 	 */
 	@Test
-	public void TestToStingIDVal() {
+	public void testToStingIDVal() {
 		String id = "-2268";
 		Address a = new Address();
 		a.setId(id);
@@ -280,7 +280,7 @@ public class AddressTests {
 	 * is called
 	 */
 	@Test
-	public void TestToStingIDBackslash() {
+	public void testToStingIDBackslash() {
 		String id = "\\\\\\";
 		Address a = new Address();
 		a.setId(id);

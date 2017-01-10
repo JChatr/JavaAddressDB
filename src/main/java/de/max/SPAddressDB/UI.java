@@ -8,13 +8,13 @@ public class UI {
 	private final static String COL = getCol(WIDTH);
 	private final static String SEP = "|";
 
-	protected static void head() {
+	static void head() {
 		String[] in = {"ID", "First Name", "Last Name", "Email", "Phone"};
 		row(in);
 		row(COL);
 	}
 
-	protected static void row(String... in) {
+	 static void row(String... in) {
 		if (in.length < COLS) {
 			String[] filled = new String[COLS];
 			for (int i = 0; i < filled.length; i++) {
@@ -33,7 +33,7 @@ public class UI {
 		System.out.println();
 	}
 
-	protected static String getCol(int a) {
+	 static String getCol(int a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < a; i++) {
 			sb.append("-");
