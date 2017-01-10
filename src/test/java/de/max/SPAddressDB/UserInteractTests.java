@@ -4,14 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.jws.soap.SOAPBinding;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.net.URI;
+import java.nio.file.*;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UserInteractTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
@@ -19,6 +18,10 @@ public class UserInteractTests {
 	@Before
 	public void prepareOutputStream() {
 		System.setOut(new PrintStream(consoleOutput));
+		try {
+			Files.delete(Paths.get("." + File.separator + "DB.txt"));
+		} catch (IOException e) {
+		}
 	}
 
 	@After
@@ -28,15 +31,383 @@ public class UserInteractTests {
 	}
 
 	@Test
-	public void testSearchNonExistent(){
-		ByteArrayInputStream in = new ByteArrayInputStream("0\nJohn\n".getBytes());
+	public void testBrowseEmptyList() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("0\n5\n").getBytes());
 		System.setIn(in);
 		UserInteract u = new UserInteract();
 		u.run();
-		assertEquals("awd",
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+		System.setIn(System.in);
+	}
+
+	@Test
+	public void testBrowseMultiPageList() {
+		String commands = "0\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"2\n" +
+				"first\n" +
+				"last\n" +
+				"email\n" +
+				"phone\n" +
+				"0\n" +
+				"0\n" +
+				"5\n";
+		ByteArrayInputStream in = new ByteArrayInputStream(commands.getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          first|           last|          email|          phone|\n" +
+				"|              2|          first|           last|          email|          phone|\n" +
+				"|              3|          first|           last|          email|          phone|\n" +
+				"|              4|          first|           last|          email|          phone|\n" +
+				"|              5|          first|           last|          email|          phone|\n" +
+				"|              6|          first|           last|          email|          phone|\n" +
+				"|              7|          first|           last|          email|          phone|\n" +
+				"|              8|          first|           last|          email|          phone|\n" +
+				"|              9|          first|           last|          email|          phone|\n" +
+				"Page (1/2) Type 0 to exit. Show page: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+		System.setIn(System.in);
+	}
+
+	@Test
+	public void testSearchNonExistent() {
+		ByteArrayInputStream in = new ByteArrayInputStream("1\nj\n5\n".getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+						"|                         |\n" +
+						"|  Java Address manager:  |\n" +
+						"|                         |\n" +
+						"*-------------------------*\n" +
+						"\n" +
+						"\n" +
+						"Pick one of the following options:\n" +
+						"\n" +
+						"0: Browse Database entries\n" +
+						"1: Search the Database\n" +
+						"2: Create new entry\n" +
+						"3: Delete an entry\n" +
+						"4: Modify an existing entry\n" +
+						"5: Exit\n" +
+						"Your choice: Enter your search query: Matching the Database by j\n" +
+						"\n" +
+						"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+						"|---------------|---------------|---------------|---------------|---------------|\n" +
+						"\n" +
+						"Pick one of the following options:\n" +
+						"\n" +
+						"0: Browse Database entries\n" +
+						"1: Search the Database\n" +
+						"2: Create new entry\n" +
+						"3: Delete an entry\n" +
+						"4: Modify an existing entry\n" +
+						"5: Exit\n" +
+						"Your choice: until next time\n",
 				consoleOutput.toString());
 		System.setIn(System.in);
 	}
+
+	@Test
+	public void testSearchExistent() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+				"1\n" +
+				"01\n" +
+				"5\n").getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: Enter your search query: Matching the Database by 01\n" +
+				"\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+		System.setIn(System.in);
+	}
+
 	@Test
 	public void testGetIntRange() {
 		ByteArrayInputStream in = new ByteArrayInputStream("1-2\n".getBytes());

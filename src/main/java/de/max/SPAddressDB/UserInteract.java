@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
-	// always up to date list
-	private Map<String, Address> addresses;
 	// periodically updated list
-	private Database<String, Address> db = new MapDB<>();
+	protected Database<String, Address> db = new MapDB<>();
+	// always up to date list
+	protected Map<String, Address> addresses = db.get();
 	private int lastIndex;
 	private final int displayLen = 10;
 
@@ -19,14 +19,13 @@ public class UserInteract {
 		System.out.println("|                         |");
 		System.out.println("*-------------------------*");
 		System.out.println();
-		addresses = db.get();
 		mainMenu();
 	}
 
 	/**
 	 * recursive method that represents the main menu of the manager
 	 */
-	protected void mainMenu() {
+	private void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
 		System.out.println("0: Browse Database entries");
 		System.out.println("1: Search the Database");
@@ -63,7 +62,7 @@ public class UserInteract {
 	/**
 	 * prints the current database to the console
 	 */
-	protected void browse(int offset) {
+	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
 		List<Address> list = new ArrayList<>(addresses.values());
 		int draw = offset;
@@ -90,7 +89,7 @@ public class UserInteract {
 	 * gets user input for the entry
 	 */
 
-	protected void createEntry() {
+	private void createEntry() {
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
@@ -100,7 +99,6 @@ public class UserInteract {
 					k = i;
 				}
 				return Integer.parseInt(k);
-
 			};
 			lastIndex = supp.get();
 		}
@@ -151,15 +149,14 @@ public class UserInteract {
 			UI.head();
 			UI.row(temp.getId(), temp.getFirstName(), temp.getLastName(), temp.getEmail(), temp.getPhone());
 		} else {
-			System.err.println("cannod modify entries of an empty database");
-			;
+			System.err.println("cannot modify entries of an empty database");
 		}
 	}
 
 	/**
 	 * deletes records if there are any
 	 */
-	protected void deleteEntry() {
+	private void deleteEntry() {
 		int removed = 0;
 		if (!isEmpty()) {
 			System.out.println("Current Records:");
@@ -173,11 +170,11 @@ public class UserInteract {
 			}
 			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
-			System.err.println("Sorry,\n cannot delete entrys form an empty database");
+			System.err.println("Sorry,\n cannot delete entries form an empty database");
 		}
 	}
 
-	protected void search() {
+	private void search() {
 		System.out.print("Enter your search query: ");
 		String mask = getString(false);
 		System.out.println("Matching the Database by " + mask);
@@ -194,7 +191,7 @@ public class UserInteract {
 	/**
 	 * cleans up
 	 */
-	protected void exit() {
+	private void exit() {
 		scan.close();
 		db.push();
 		System.out.println("until next time");
@@ -205,7 +202,7 @@ public class UserInteract {
 	 *
 	 * @return
 	 */
-	protected boolean isEmpty() {
+	private boolean isEmpty() {
 		if (addresses.isEmpty()) {
 			System.err.println("\nThere are no addresses!\n");
 			return true;
