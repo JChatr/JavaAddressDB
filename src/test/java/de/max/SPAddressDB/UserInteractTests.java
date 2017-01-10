@@ -2,20 +2,25 @@ package de.max.SPAddressDB;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.InputMismatchException;
 
 import static org.junit.Assert.*;
 
 public class UserInteractTests extends UserInteract {
 
-	// testing of the getRange method
+	@Test
+	public void TestGetString(){
+		//ByteArrayInputStream in = new ByteArrayInputStream("2\n\n\n".getBytes());
+		//System.setIn(in);
+		//assertEquals("2",getString(false));
+	}
 	@Test
 	public void TestGetRange1To6() {
 		int[] out = getRange("1-6");
 		int[] a = {1, 2, 3, 4, 5, 6};
 		assertArrayEquals(a, out);
 	}
-
 	/**
 	 *
 	 */
@@ -25,7 +30,6 @@ public class UserInteractTests extends UserInteract {
 		int[] a = {1, 6};
 		assertArrayEquals(a, out);
 	}
-
 	/**
 	 *
 	 */
@@ -35,7 +39,6 @@ public class UserInteractTests extends UserInteract {
 		int[] a = {1, 6};
 		assertArrayEquals(a, out);
 	}
-
 	/**
 	 *
 	 */
@@ -45,7 +48,6 @@ public class UserInteractTests extends UserInteract {
 		int[] a = {1, 5, 8, 9};
 		assertArrayEquals(a, out);
 	}
-
 	/**
 	 *
 	 */
@@ -53,7 +55,6 @@ public class UserInteractTests extends UserInteract {
 	public void TestGetRangeException() {
 		int[] out = getRange("dcklsfksdf-asdasd");
 	}
-
 	/**
 	 *
 	 */
@@ -75,7 +76,7 @@ public class UserInteractTests extends UserInteract {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Test
 	public void TestGetRangeSperatedList4() {
