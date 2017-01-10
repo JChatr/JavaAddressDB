@@ -5,12 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
-import java.net.URI;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public class UserInteractTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
@@ -27,6 +27,10 @@ public class UserInteractTests {
 	@After
 	public void resetOutputStream() {
 		System.setOut(System.out);
+		try {
+			Files.delete(Paths.get("." + File.separator + "DB.txt"));
+		} catch (IOException e) {
+		}
 		consoleOutput.reset();
 	}
 
@@ -76,61 +80,73 @@ public class UserInteractTests {
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
 				"email\n" +
 				"phone\n" +
+
 				"2\n" +
 				"first\n" +
 				"last\n" +
@@ -406,6 +422,416 @@ public class UserInteractTests {
 				"5: Exit\n" +
 				"Your choice: until next time\n", consoleOutput.toString());
 		System.setIn(System.in);
+	}
+
+	@Test
+	public void testModifyEntryThenShow() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+				"4\n" +
+				"1\n" +
+				"John\n" +
+				"Doe\n" +
+				"email@mymail.com\n" +
+				"+490115155\n" +
+				"5\n").getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Index of the Record to be edited: You can now edit the fields. Leave out fields to keep old data.\n" +
+				"First Name: Last Name: Optional Email: Optional Phone: \n" +
+				" successfully modified the entry:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|           John|            Doe|email@mymail.co|     +490115155|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+	}
+
+	@Test
+	public void testModifyEntryAllFieldsBlank() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+				"4\n" +
+				"1\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"5\n").getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Index of the Record to be edited: You can now edit the fields. Leave out fields to keep old data.\n" +
+				"First Name: Last Name: Optional Email: Optional Phone: \n" +
+				" successfully modified the entry:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+	}
+
+	@Test
+	public void testDeleteEntrySingleDelete() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+				"3\n" +
+				"1\n" +
+				"5\n").getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: Current Records:\n" +
+				"\n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Index of the Record to be deleted: Successfully removed 1 entries\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+
+	}
+
+	@Test
+	public void testDeleteEntryRangeDelete() {
+		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"2\n" +
+				"01010\n" +
+				"010101\n" +
+				"ß1ß1ß\n" +
+				"ß1ß1ß1ß\n" +
+
+				"3\n" +
+				"1-8\n" +
+				"0\n" +
+				"5\n").getBytes());
+		System.setIn(in);
+		UserInteract u = new UserInteract();
+		u.run();
+		assertEquals("*-------------------------*\n" +
+				"|                         |\n" +
+				"|  Java Address manager:  |\n" +
+				"|                         |\n" +
+				"*-------------------------*\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: First Name: Last Name: Optional Email: Optional Phone: \n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: Current Records:\n" +
+				"\n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              1|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              2|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              3|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              4|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              5|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              6|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              7|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              8|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|              9|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Index of the Record to be deleted: Successfully removed 8 entries\n" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: \n" +
+				"Current records:\n" +
+				"|             ID|     First Name|      Last Name|          Email|          Phone|\n" +
+				"|---------------|---------------|---------------|---------------|---------------|\n" +
+				"|              9|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"|             10|          01010|         010101|          ß1ß1ß|        ß1ß1ß1ß|\n" +
+				"\n" +
+				"Pick one of the following options:\n" +
+				"\n" +
+				"0: Browse Database entries\n" +
+				"1: Search the Database\n" +
+				"2: Create new entry\n" +
+				"3: Delete an entry\n" +
+				"4: Modify an existing entry\n" +
+				"5: Exit\n" +
+				"Your choice: until next time\n", consoleOutput.toString());
+
 	}
 
 	@Test
