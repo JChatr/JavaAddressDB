@@ -24,7 +24,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	/**
 	 * This method is used to set the directory and get the map.
 	 *
-	 * @param Sets the directory to 'directory'.
+	 * @param directory Sets the directory to 'directory'.
 	 */
 	public MapDB(String directory) {
 		this.globalDir = directory;
@@ -42,7 +42,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	}
 
 	/**
-	 *
+	 *  @param directory
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
