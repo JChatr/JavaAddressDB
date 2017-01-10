@@ -97,13 +97,20 @@ public class MapDB<K, V> implements Database<K ,V> {
 		return true;
 	}
 
-	
+	/**
+	 * This method is used to update the database. 
+	 */
 	@Override
 	public boolean update(Map<K, V> data) {
 		this.data = data;
 		return push();
 	}
 	
+	/**
+	 * This method is used to checks if direcoty exists and if you are able to read and write in it.
+	 * @param directory Directory that is going to be checked.
+	 * @return Returns true if the dir exists an you are able to read/write.
+	 */
 	private boolean validDir(String directory) {
 		// current dir with out path extension
 		File dir = new File(directory.substring(0, directory.lastIndexOf(File.separator) + 1));
