@@ -14,14 +14,15 @@ public class UI {
 	 * This method is used to create the header of the GUI.
 	 */
 	public static void head() {
-		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
+		String[] in = {"ID", "First Name", "Last Name", "Email", "Phone"};
 		row(in);
 		row(COL);
 	}
 
 	/**
-	 * This method is used to create the rows of the GUI. 
-	 * Input will be printed with seperators. 
+	 * This method is used to create the rows of the GUI.
+	 * Input will be printed with seperators.
+	 *
 	 * @param in Input from the head method.
 	 */
 	public static void row(String... in) {
@@ -43,6 +44,7 @@ public class UI {
 
 	/**
 	 * This method is used to seperate the head from the table body.
+	 *
 	 * @param a Input the width of the seperator.
 	 * @return Returns the seperator.
 	 */
