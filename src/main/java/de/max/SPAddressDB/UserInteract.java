@@ -98,7 +98,6 @@ public class UserInteract {
 	 * This method is used to create a new entry in the database.
 	 * The user will be asked to enter the first name, last name and optional the email and phone number.
 	 */
-
 	protected void createEntry() {
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
@@ -169,7 +168,8 @@ public class UserInteract {
 	}
 
 	/**
-	 * deletes records if there are any
+	 * This method is used to delete an existing entry. 
+	 * After browsing through the database the user can enter the ID of the entry that shall be deletd.
 	 */
 	protected void deleteEntry() {
 		int removed = 0;
@@ -189,6 +189,10 @@ public class UserInteract {
 		}
 	}
 
+	/**
+	 * This method is used to search through the database.
+	 * After entering a search query the program will show the entries matching this query.
+	 */
 	protected void search() {
 		System.out.print("Enter your search query: ");
 		String mask = getString(false);
@@ -204,7 +208,7 @@ public class UserInteract {
 	}
 
 	/**
-	 * cleans up
+	 * This method is used to close the program after updating the database and closing the scanner. 
 	 */
 	protected void exit() {
 		scan.close();
@@ -213,9 +217,9 @@ public class UserInteract {
 	}
 
 	/**
-	 * checks weather addresses is empty and prints error
+	 * This method is used to check weather addresses is empty.
 	 *
-	 * @return
+	 * @return Returns a error if addresses is empty.
 	 */
 	protected boolean isEmpty() {
 		if (addresses.isEmpty()) {
@@ -227,9 +231,10 @@ public class UserInteract {
 	}
 
 	/**
-	 * @param rangeMin
-	 * @param rangeMax
-	 * @return
+	 * This method is used to return the user input as integer.
+	 * @param rangeMin The minimum range of the input.
+	 * @param rangeMax The maximum range of the input.
+	 * @return Returns the user input.
 	 */
 	protected int[] getInt(int rangeMin, int rangeMax) {
 		int[] input;
@@ -249,7 +254,8 @@ public class UserInteract {
 	}
 
 	/**
-	 * @return
+	 * This method is used to return the user input as string.
+	 * @return Returns the user input as an string.
 	 */
 	protected String getString(boolean optionalField) {
 		String out = "";
