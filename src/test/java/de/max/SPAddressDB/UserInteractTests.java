@@ -15,6 +15,10 @@ import static org.junit.Assert.assertEquals;
 public class UserInteractTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 
+	/**
+	 * runs before every test to redirect the standard output stream to be read by the
+	 * tests generating that output
+	 */
 	@Before
 	public void prepareTests() {
 		System.setOut(new PrintStream(consoleOutput));
@@ -24,6 +28,10 @@ public class UserInteractTests {
 		}
 	}
 
+	/**
+	 * runs after every test
+	 * resets the redirection to System.out and clears the output stream
+	 */
 	@After
 	public void resetTestPreparations() {
 		System.setOut(System.out);
@@ -34,6 +42,10 @@ public class UserInteractTests {
 		consoleOutput.reset();
 	}
 
+
+	/**
+	 * tests if the Address DB Driver runs displays an empty Database as expected
+	 */
 	@Test
 	public void testBrowseEmptyList() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("0\n5\n").getBytes());
@@ -72,6 +84,9 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the Address DB Driver runs displays an multi page Database as expected
+	 */
 	@Test
 	public void testBrowseMultiPageList() {
 		String commands = "0\n" +
@@ -329,7 +344,9 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 		System.setIn(System.in);
 	}
-
+	/**
+	 * tests if the Address DB Driver displays no elements when the search query is invalid
+	 */
 	@Test
 	public void testSearchNonExistent() {
 		ByteArrayInputStream in = new ByteArrayInputStream("1\nj\n5\n".getBytes());
@@ -368,7 +385,9 @@ public class UserInteractTests {
 				consoleOutput.toString());
 		System.setIn(System.in);
 	}
-
+	/**
+	 * tests if the Address DB Driver displays all matching entries when the search query is valid
+	 */
 	@Test
 	public void testSearchExistent() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
@@ -424,6 +443,9 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the Address DB Driver modifies entries correctly
+	 */
 	@Test
 	public void testModifyEntryThenShow() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
@@ -489,6 +511,9 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 	}
 
+	/**
+	 * tests if the Address DB Driver allows to modify an entry and then change none it's fields
+	 */
 	@Test
 	public void testModifyEntryAllFieldsBlank() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
@@ -554,6 +579,9 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 	}
 
+	/**
+	 * tests if the Address DB Driver correctly deletes a single entry
+	 */
 	@Test
 	public void testDeleteEntrySingleDelete() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
@@ -613,7 +641,9 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 
 	}
-
+	/**
+	 * tests if the Address DB Driver correctly deletes a range of multiple entries
+	 */
 	@Test
 	public void testDeleteEntryRangeDelete() {
 		ByteArrayInputStream in = new ByteArrayInputStream(("2\n" +
@@ -834,6 +864,9 @@ public class UserInteractTests {
 
 	}
 
+	/**
+	 * tests if the correct range is returned when "1-2" is called
+	 */
 	@Test
 	public void testGetIntRange() {
 		ByteArrayInputStream in = new ByteArrayInputStream("1-2\n".getBytes());
@@ -842,7 +875,9 @@ public class UserInteractTests {
 		assertArrayEquals(new int[]{1, 2}, u.getInt(0, 10));
 		System.setIn(System.in);
 	}
-
+	/**
+	 * tests if the correct range is returned when multiple ranges are entered
+	 */
 	@Test
 	public void testGetIntInvalidRange() {
 		ByteArrayInputStream in = new ByteArrayInputStream("1-2\n3-5\n6-7\n".getBytes());
@@ -851,7 +886,9 @@ public class UserInteractTests {
 		assertArrayEquals(new int[]{6, 7}, u.getInt(5, 10));
 		System.setIn(System.in);
 	}
-
+	/**
+	 * tests if the correct range is returned when a single digit is entered
+	 */
 	@Test
 	public void testGetIntSingle() {
 		ByteArrayInputStream in = new ByteArrayInputStream("5\n".getBytes());
@@ -861,7 +898,9 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
-
+	/**
+	 * tests if the correct range is returned when a single digit is entered
+	 */
 	@Test
 	public void testGetStringNumber() {
 		ByteArrayInputStream in = new ByteArrayInputStream("2\n".getBytes());

@@ -15,17 +15,28 @@ import static org.junit.Assert.assertEquals;
 public class AdrDBDriverTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 
+	/**
+	 * runs before every test to redirect the standard output stream to be read by the
+	 * tests generating that output
+	 */
 	@Before
 	public void prepareOutputStream() {
 		System.setOut(new PrintStream(consoleOutput));
 	}
 
+	/**
+	 * runs after every test
+	 * resets the redirection to System.out and clears the output stream
+	 */
 	@After
 	public void resetOutputStream() {
 		System.setOut(System.out);
 		consoleOutput.reset();
 	}
 
+	/**
+	 * tests if the Address DB Driver runs and exits as expected
+	 */
 	@Test
 	public void testAdrDBDriverExit(){
 		ByteArrayInputStream in = new ByteArrayInputStream("5\n".getBytes());

@@ -15,7 +15,8 @@ public class MapDBTests {
 
 
 	/**
-	 * tests weather the vals that type written are also read
+	 * tests weather objects that are written to the Database and then returned
+	 * are the same as the written ones
 	 */
 	@Test
 	public void testWriteInteger() {
@@ -34,7 +35,7 @@ public class MapDBTests {
 	}
 
 	/**
-	 * tests for invalid paths
+	 * tests if the Database will error on an invalid path
 	 */
 	@Test
 	public void testInvalidPathGet1() {
@@ -45,6 +46,10 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
+	/**
+	 *  test if the Database will error on a path with a typo
+	 */
 	@Test
 	public void testInvalidPathGet2() {
 		String path = "/hom:e/max/";
@@ -61,6 +66,10 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
+	/**
+	 * tests if the Database will write to a valid path
+	 */
 	@Test
 	public void testValidPathGet2() {
 		String path = "/home/max/Desktop";
@@ -69,6 +78,12 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
+	/**
+	 * tests if the Database will error when the application as insufficient permissions
+	 * to write to a directory
+	 *
+	 */
 	@Test
 	public void testGetPermissions() {
 		String path = "/opt/Krita/";
@@ -77,6 +92,11 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
+	/**
+	 * tests if the Database will error if the application has insufficient permissions to
+	 * write to a Directory
+	 */
 	@Test
 	public void testGetPermissions2() {
 		String path = "/";
