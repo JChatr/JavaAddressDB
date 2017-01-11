@@ -292,6 +292,7 @@ public class UserInteract {
 			// this converts the out of bounds exception on a parse error to an 
 			// InputMismatch one to give some better context to what is going on
 			throw new InputMismatchException();
+			throw new Empty
 		}
 	}
 }
