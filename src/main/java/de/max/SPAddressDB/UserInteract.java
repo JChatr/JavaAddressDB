@@ -274,13 +274,11 @@ public class UserInteract {
 	}
 
 	/**
-	 * This method is used to parse the range of an integer array
-	 * does some basic parsing on the range
-	 * any parse exceptions will bubble up (NumberFormatExecption)
-	 *
-	 * @param in
-	 * @return
-	 * @throws InputMismatchException
+	 * This method is used to parse a string giving an integer range to an integer array.
+	 * 
+	 * @param in The string that shall be parsed.
+	 * @return Returns the input range sorted as array.
+	 * @throws InputMismatchException Throws exception if the input doesn't match the format expectation.
 	 */
 	protected int[] getRange(String in) {
 		try {
@@ -315,5 +313,7 @@ public class UserInteract {
 			// InputMismatch one to give some better context to what is going on
 			throw new InputMismatchException();
 		}
+		
 	}
+	
 }
