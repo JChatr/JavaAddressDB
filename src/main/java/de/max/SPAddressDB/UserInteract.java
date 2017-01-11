@@ -1,25 +1,26 @@
 package de.max.SPAddressDB;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * This class is used to interact with the user.
+ *
+ * @author mk285
+ */
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
-	// always up to date list
-	private Map<String, Address> addresses;
 	// periodically updated list
-	private Database<String, Address> db = new MapDB<>();
+	protected Database<String, Address> db = new MapDB<>();
+	// always up to date list
+	protected Map<String, Address> addresses = db.get();
 	private int lastIndex;
 	private final int displayLen = 10;
 
+	/**
+	 * This method is used to print the header,
+	 * get the database and start the mainMenu method.
+	 */
 	public void run() {
 		System.out.println("*-------------------------*");
 		System.out.println("|                         |");
@@ -27,12 +28,12 @@ public class UserInteract {
 		System.out.println("|                         |");
 		System.out.println("*-------------------------*");
 		System.out.println();
-		addresses = db.get();
 		mainMenu();
 	}
 
 	/**
-	 * recursive method that represents the main menu of the manager
+	 * This method is used to print the main menu.
+	 * The user is able to choose from a main menu entry.
 	 */
 	private void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
@@ -40,23 +41,27 @@ public class UserInteract {
 		System.out.println("1: Search the Database");
 		System.out.println("2: Create new entry");
 		System.out.println("3: Delete an entry");
-		System.out.println("4: Exit");
+		System.out.println("4: Modify an existing entry");
+		System.out.println("5: Exit");
 
 		System.out.print("Your choice: ");
-		switch (getInt(0, 4)[0]) {
-			case 0 :
+		switch (getInt(0, 5)[0]) {
+			case 0:
 				browse(0);
 				break;
-			case 1 :
+			case 1:
 				search();
 				break;
-			case 2 :
+			case 2:
 				createEntry();
 				break;
-			case 3 :
+			case 3:
 				deleteEntry();
 				break;
-			case 4 :
+			case 4:
+				modifyEntry();
+				break;
+			case 5:
 				exit();
 				return;
 		}
@@ -65,7 +70,10 @@ public class UserInteract {
 	}
 
 	/**
-	 * prints the current database to the console
+	 * This method is used to print the database into the console.
+	 * It will start at the offset 'offset' and will print 10 entries.
+	 *
+	 * @param offset Starts at the offset 'offset'.
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
@@ -77,53 +85,94 @@ public class UserInteract {
 		for (Address j : list) {
 			// is the current local index null?
 			if (j == null) continue;
+			if (++draw == displayLen + offset) break;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
-			if (++draw == displayLen + offset) break; 
 		}
 		if (draw < addresses.size()) {
 			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
 			offset = getInt(0, addresses.size() / displayLen + 1)[0];
 			// recurse if the user requests another page
-			if (offset != 0) { browse((offset - 1) * displayLen); }
+			if (offset != 0) {
+				browse((offset - 1) * displayLen);
+			}
 		}
 	}
 
 	/**
-	 * gets user input for the entry
+	 * This method is used to create a new entry in the database.
+	 * The user will be asked to enter the first name, last name and optional the email and phone number.
 	 */
 	private void createEntry() {
-		// this is one of the dirtiest workarounds I have seen in a long time 
-		// FUCK JAVA <--
-		// to get the last element from a hash map I have to convert all keys to an arrayList and then get
-		// the element i want from that list
-		// FUCK JAVA <--
+
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
 			Supplier<Integer> supp = () -> {
 				String k = "";
-				for (String i : addresses.keySet()){
+				for (String i : addresses.keySet()) {
 					k = i;
-				}; return Integer.parseInt(k);};
+				}
+				return Integer.parseInt(k);
+			};
 			lastIndex = supp.get();
 		}
+
 		Address address = new Address();
 		address.setId(++lastIndex + "");
-			System.out.print("First Name: ");
+		System.out.print("First Name: ");
 		address.setFirstName(getString(false));
-			System.out.print("Last Name: ");
+		System.out.print("Last Name: ");
 		address.setLastName(getString(false));
-			System.out.print("Optional Email: ");
-			String a = getString(true);
+		System.out.print("Optional Email: ");
+		String a = getString(true);
 		address.setEmail((a.equals("")) ? "-" : a);
-			System.out.print("Optional Phone: ");
-			String b = getString(true);
+		System.out.print("Optional Phone: ");
+		String b = getString(true);
 		address.setPhone((b.equals("")) ? "-" : b);
 		addresses.put(lastIndex + "", address);
+
 	}
 
 	/**
-	 * deletes records if there are any
+	 * This method is used to modify an existing entry.
+	 */
+	private void modifyEntry() {
+		if (!isEmpty()) {
+			browse(0);
+			System.out.print("\nIndex of the Record to be edited: ");
+			int entry = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)[0];
+			Address temp = addresses.get(entry + "");
+			while (temp == null) {
+				System.out.println("Entry not found. Try again!");
+				entry = getInt(Integer.MIN_VALUE, Integer.MAX_VALUE)[0];
+				temp = addresses.get(entry + "");
+			}
+
+			System.out.println("You can now edit the fields. Leave out fields to keep old data.");
+			System.out.print("First Name: ");
+			String in = getString(true);
+			if (!in.equals("")) temp.setFirstName(in);
+			System.out.print("Last Name: ");
+			in = getString(true);
+			if (!in.equals("")) temp.setLastName(in);
+			System.out.print("Optional Email: ");
+			in = getString(true);
+			if (!in.equals("")) temp.setEmail(in);
+			System.out.print("Optional Phone: ");
+			in = getString(true);
+			if (!in.equals("")) temp.setPhone(in);
+
+			System.out.println("\n successfully modified the entry:");
+			UI.head();
+			UI.row(temp.getId(), temp.getFirstName(), temp.getLastName(), temp.getEmail(), temp.getPhone());
+		} else {
+			System.err.println("cannot modify entries of an empty database");
+		}
+	}
+
+	/**
+	 * This method is used to delete an existing entry.
+	 * After browsing through the database the user can enter the ID of the entry that shall be deletd.
 	 */
 	private void deleteEntry() {
 		int removed = 0;
@@ -139,10 +188,14 @@ public class UserInteract {
 			}
 			System.out.format("Successfully removed %d entries\n\n\n", removed);
 		} else {
-			System.err.println("Sorry,\n cannot delete entrys form an empty database");
+			System.err.println("Sorry,\n cannot delete entries form an empty database");
 		}
 	}
 
+	/**
+	 * This method is used to search through the database.
+	 * After entering a search query the program will show the entries matching this query.
+	 */
 	private void search() {
 		System.out.print("Enter your search query: ");
 		String mask = getString(false);
@@ -158,7 +211,7 @@ public class UserInteract {
 	}
 
 	/**
-	 * cleans up
+	 * This method is used to close the program after updating the database and closing the scanner.
 	 */
 	private void exit() {
 		scan.close();
@@ -167,13 +220,13 @@ public class UserInteract {
 	}
 
 	/**
-	 * checks weather addresses is empty and prints error
-	 * 
-	 * @return
+	 * This method is used to check weather addresses is empty.
+	 *
+	 * @return Returns a error if addresses is empty.
 	 */
 	private boolean isEmpty() {
 		if (addresses.isEmpty()) {
-			System.err.println("\nThere are no addresses to delete\n");
+			System.err.println("\nThere are no addresses!\n");
 			return true;
 		} else {
 			return false;
@@ -181,21 +234,22 @@ public class UserInteract {
 	}
 
 	/**
-	 * 
-	 * @param rangeMin
-	 * @param rangeMax
-	 * @return
+	 * This method is used to return the user input as integer.
+	 *
+	 * @param rangeMin The minimum range of the input.
+	 * @param rangeMax The maximum range of the input.
+	 * @return Returns the user input.
 	 */
-	private int[] getInt(int rangeMin, int rangeMax) {
+	protected int[] getInt(int rangeMin, int rangeMax) {
 		int[] input;
 		try {
 			input = getRange(scan.next());
 			scan.nextLine();
 		} catch (InputMismatchException e) {
-			System.err.print("Your input is not valid \nTry again: ");
-			return getInt(rangeMin, rangeMax);	
+			System.err.print("Your input is invalid \nTry again: ");
+			return getInt(rangeMin, rangeMax);
 		}
-		if (input.length !=0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
+		if (input.length != 0 && input[0] >= rangeMin && input[input.length - 1] <= rangeMax) {
 			return input;
 		} else {
 			System.err.println("The input is in an invalid range\nTry again: ");
@@ -204,16 +258,17 @@ public class UserInteract {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * This method is used to return the user input as string.
+	 *
+	 * @return Returns the user input as an string.
 	 */
-	private String getString(boolean optionalField) {
+	protected String getString(boolean optionalField) {
 		String out = "";
 		try {
 			out = scan.nextLine();
 			if (!optionalField && out.equals("")) {
 				System.err.println("Invalid input");
-				getString(optionalField);
+				out = getString(optionalField);
 			} else
 				return out;
 		} catch (NoSuchElementException e) {
@@ -222,21 +277,21 @@ public class UserInteract {
 		}
 		return out;
 	}
-	
+
 	/**
-	 * does some basic parsing on the range
-	 * any parse exceptions will bubble up (NumberFormatExecption) 
-	 * @param in
-	 * @return
-	 * @throws InputMismatchException
+	 * This method is used to parse a string giving an integer range to an integer array.
+	 *
+	 * @param in The string that shall be parsed.
+	 * @return Returns the input range sorted as array.
+	 * @throws InputMismatchException Throws exception if the input doesn't match the format expectation.
 	 */
-	private int[] getRange(String in) {
+	protected int[] getRange(String in) throws InputMismatchException {
 		try {
 			Set<Integer> range = new TreeSet<>();
 			// do first split on input removing all explicit delimiter
 			String[] exp = in.split("\\;|\\.|,|&");
 			for (String i : exp) {
-				// split the already split input again to get any possible ranges
+				// split the already split input again to type any possible ranges
 				String[] tmp = i.split("\\D+");
 				if (tmp.length > 2) {
 					// if the input contains a separated list
@@ -245,7 +300,7 @@ public class UserInteract {
 					}
 				} else {
 					// if the input is a range
-					for (int k = Integer.parseInt(tmp[0]); k <= Integer.parseInt(tmp[tmp.length -1]); k++) {
+					for (int k = Integer.parseInt(tmp[0]); k <= Integer.parseInt(tmp[tmp.length - 1]); k++) {
 						range.add(k);
 					}
 				}
@@ -263,5 +318,7 @@ public class UserInteract {
 			// InputMismatch one to give some better context to what is going on
 			throw new InputMismatchException();
 		}
+
 	}
+
 }

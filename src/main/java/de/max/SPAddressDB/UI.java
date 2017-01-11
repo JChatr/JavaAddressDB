@@ -1,8 +1,11 @@
 
 package de.max.SPAddressDB;
 
-import java.util.Arrays;
-
+/**
+ * This class is used to generate the user interface.
+ *
+ * @author mk285
+ */
 public class UI {
 
 	private final static int COLS = 5;
@@ -10,17 +13,28 @@ public class UI {
 	private final static String COL = getCol(WIDTH);
 	private final static String SEP = "|";
 
+	/**
+	 * This method is used to create the header of the UI.
+	 */
 	public static void head() {
-		String[] in = {"ID", "Frist Name", "Last Name", "Email", "Phone"};
+		String[] in = {"ID", "First Name", "Last Name", "Email", "Phone"};
 		row(in);
 		row(COL);
 	}
 
-	public static void row(String... in) {
+	/**
+	 * This method is used to create the rows of the UI.
+	 * Input will be printed with seperators.
+	 *
+	 * @param in Strings to print
+	 */
+	static void row(String... in) {
 		if (in.length < COLS) {
-			String[] t = new String[COLS];
-			Arrays.fill(t, in[0]);
-			in = t;
+			String[] filled = new String[COLS];
+			for (int i = 0; i < filled.length; i++) {
+				filled[i] = in[i % in.length];
+			}
+			in = filled;
 		}
 		System.out.print(SEP);
 		for (int i = 0; i < COLS; i++) {
@@ -33,7 +47,13 @@ public class UI {
 		System.out.println();
 	}
 
-	private static String getCol(int a) {
+	/**
+	 * This method is used to seperate the head from the table body.
+	 *
+	 * @param a Input the width of the seperator.
+	 * @return Returns the seperator.
+	 */
+	static String getCol(int a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < a; i++) {
 			sb.append("-");
