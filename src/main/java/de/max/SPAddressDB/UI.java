@@ -3,6 +3,11 @@ package de.max.SPAddressDB;
 
 import java.util.Arrays;
 
+/**
+ * This class is used to generate the user interface.
+ * @author mk285
+ *
+ */
 public class UI {
 
 	private final static int COLS = 5;

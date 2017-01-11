@@ -2,6 +2,13 @@ package de.max.SPAddressDB;
 
 import java.util.Map;
 
+/**
+ * This class is used as a common interface for all databases.
+ * @author mk285
+ *
+ * @param <K> The key of an entry.
+ * @param <V> The value of an entry.
+ */
 public interface Database<K, V> {
 
 	/**

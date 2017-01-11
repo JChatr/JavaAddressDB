@@ -3,6 +3,11 @@ package de.max.SPAddressDB;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * This class is used to interact with the user.
+ * @author mk285
+ *
+ */
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// always up to date list

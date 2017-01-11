@@ -4,13 +4,18 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * This class is used to store the data of one person.
+ * @author mk285
+ *
+ */
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = -5733008229122025870L;
 	private Map<Enum, String> data = new LinkedHashMap<>();
 
 	/**
-	 * enum to provide type safety (and to keep Key IDs consistent)
+	 * Enum to provide type safety (and to keep Key IDs consistent)
 	 *
 	 * @author mk28
 	 */

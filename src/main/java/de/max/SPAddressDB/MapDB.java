@@ -8,6 +8,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * This class implements the database interface. Reads and writes from and to the disk.
+ * @author mk285
+ *
+ * @param <K> The key of an entry.
+ * @param <V> The value of an entry.
+ */
 public class MapDB<K, V> implements Database<K, V> {
 
 	private Map<K, V> data;
