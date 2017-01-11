@@ -260,7 +260,7 @@ public class UserInteract {
 	 * @return
 	 * @throws InputMismatchException
 	 */
-	protected int[] getRange(String in) {
+	protected int[] getRange(String in) throws InputMismatchException {
 		try {
 			Set<Integer> range = new TreeSet<>();
 			// do first split on input removing all explicit delimiter
@@ -292,7 +292,6 @@ public class UserInteract {
 			// this converts the out of bounds exception on a parse error to an 
 			// InputMismatch one to give some better context to what is going on
 			throw new InputMismatchException();
-			throw new Empty
 		}
 	}
 }

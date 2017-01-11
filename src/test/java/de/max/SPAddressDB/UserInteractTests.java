@@ -344,6 +344,7 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 		System.setIn(System.in);
 	}
+
 	/**
 	 * tests if the Address DB Driver displays no elements when the search query is invalid
 	 */
@@ -385,6 +386,7 @@ public class UserInteractTests {
 				consoleOutput.toString());
 		System.setIn(System.in);
 	}
+
 	/**
 	 * tests if the Address DB Driver displays all matching entries when the search query is valid
 	 */
@@ -641,6 +643,7 @@ public class UserInteractTests {
 				"Your choice: until next time\n", consoleOutput.toString());
 
 	}
+
 	/**
 	 * tests if the Address DB Driver correctly deletes a range of multiple entries
 	 */
@@ -875,6 +878,7 @@ public class UserInteractTests {
 		assertArrayEquals(new int[]{1, 2}, u.getInt(0, 10));
 		System.setIn(System.in);
 	}
+
 	/**
 	 * tests if the correct range is returned when multiple ranges are entered
 	 */
@@ -886,6 +890,7 @@ public class UserInteractTests {
 		assertArrayEquals(new int[]{6, 7}, u.getInt(5, 10));
 		System.setIn(System.in);
 	}
+
 	/**
 	 * tests if the correct range is returned when a single digit is entered
 	 */
@@ -899,7 +904,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 * tests if the correct range is returned when a single digit is entered
+	 * tests if the same string as the one that was entered gets returned
+	 * when the string consists of Numbers
 	 */
 	@Test
 	public void testGetStringNumber() {
@@ -910,6 +916,10 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the same string as the one that was entered gets returned
+	 * when the string consists of characters
+	 */
 	@Test
 	public void testGetStringChars() {
 		ByteArrayInputStream in = new ByteArrayInputStream("this is a word\n".getBytes());
@@ -919,6 +929,10 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the same string as the one that was entered gets returned
+	 * when the string consists of newline char
+	 */
 	@Test
 	public void testGetStringOptional() {
 		ByteArrayInputStream in = new ByteArrayInputStream("\n".getBytes());
@@ -928,6 +942,10 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the same string as the one that was entered gets returned
+	 * if the newline chars get removed
+	 */
 	@Test
 	public void testGetStringInvalid() {
 		ByteArrayInputStream in = new ByteArrayInputStream("\n\n\nasd\n".getBytes());
@@ -937,6 +955,10 @@ public class UserInteractTests {
 		System.setIn(System.in);
 	}
 
+	/**
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is all integeers form 1-6
+	 */
 	@Test
 	public void testGetRange1To6() {
 		UserInteract u = new UserInteract();
@@ -946,7 +968,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is all integers form 1-6
 	 */
 	@Test
 	public void testGetRange1To6V2() {
@@ -957,7 +980,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is the integers 1,6
 	 */
 	@Test
 	public void testGetRange6And1() {
@@ -968,7 +992,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is the integers 1,5,6,9 with the , separator
 	 */
 	@Test
 	public void testGetRangeSeparatedList1() {
@@ -979,7 +1004,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is invalid so and Exception is thrown
 	 */
 	@Test(expected = InputMismatchException.class)
 	public void testGetRangeException() {
@@ -988,7 +1014,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is the integers 1,5,8,9 with the ; separator
 	 */
 	@Test
 	public void testGetRangeSeparatedList2() {
@@ -999,7 +1026,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here the range is the integers 1,5,8,9 with the . seperator
 	 */
 	@Test
 	public void testGetRangeSeparatedList3() {
@@ -1010,7 +1038,8 @@ public class UserInteractTests {
 	}
 
 	/**
-	 *
+	 * tests if the passed in range is evaluated to the correct array.
+	 * here a combination of ranges and single selections is tested
 	 */
 	@Test
 	public void testGetRangeSeparatedList4() {

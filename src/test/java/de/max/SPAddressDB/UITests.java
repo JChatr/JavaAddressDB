@@ -15,17 +15,28 @@ import static org.junit.Assert.*;
 public class UITests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 
+	/**
+	 * runs before every test to redirect the standard output stream to be read by the
+	 * tests generating that output
+	 */
 	@Before
 	public void prepareOutputStream() {
 		System.setOut(new PrintStream(consoleOutput));
 	}
 
+	/**
+	 * runs after every test
+	 * resets the redirection to System.out and clears the output stream
+	 */
 	@After
 	public void resetOutputStream() {
 		System.setOut(System.out);
 		consoleOutput.reset();
 	}
 
+	/**
+	 * tests if the print head method prints the correct output to the console
+	 */
 	@Test
 	public void testHeadPrintOut() {
 		UI u = new UI();
@@ -35,6 +46,10 @@ public class UITests {
 				consoleOutput.toString());
 	}
 
+	/**
+	 * tests if when only 2 arguments are passed that the remaining columns get filled.
+	 * Also makes sure that if the strings are shorter they stay right aligned
+	 */
 	@Test
 	public void testRowPrintOneArgSpaceFilling() {
 		UI u = new UI();
@@ -43,6 +58,10 @@ public class UITests {
 				consoleOutput.toString());
 	}
 
+	/**
+	 * tests if when only 1 argument is passed that the remaining columns get filled.
+	 * Also makes sure that if the strings is linger they stay right aligned
+	 */
 	@Test
 	public void testRowPrintOneArgOverflow() {
 		UI u = new UI();
@@ -51,6 +70,10 @@ public class UITests {
 				consoleOutput.toString());
 	}
 
+	/**
+	 * tests if when more arguments than columns are passed that no overflow occurs
+	 * Also makes sure that if the strings are shorter they stay right aligned
+	 */
 	@Test
 	public void testRowPrintMoreArgsFilling() {
 		UI u = new UI();
@@ -59,6 +82,10 @@ public class UITests {
 				consoleOutput.toString());
 	}
 
+	/**
+	 * tests if when only 2 arguments are passed that the remaining columns get filled.
+	 * Also makes sure that if the strings are shorter they stay right aligned
+	 */
 	@Test
 	public void testRowPrintMoreArgsRepeating() {
 		UI u = new UI();
@@ -66,6 +93,4 @@ public class UITests {
 		assertEquals("|              1|              2|              1|              2|              1|\n",
 				consoleOutput.toString());
 	}
-
-
 }
