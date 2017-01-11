@@ -27,7 +27,7 @@ public class Address implements Serializable {
 	 * Constructor of the class Address
 	 *
 	 * @param id        The ID of the index in the database.
-	 * @param firstName The First name of the person.
+	 * @param firstName The first name of the person.
 	 * @param lastName  The last name of the person.
 	 * @param email     The email of the person.
 	 * @param phone     The phone number of the person.

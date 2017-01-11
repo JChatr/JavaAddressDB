@@ -39,7 +39,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	}
 
 	/**
-	 * This method is used to  override the method get() and gets the map.
+	 * This method is used to read the database from the default directory.
 	 *
 	 * @return Returns the map with the directory 'globalDir'.
 	 */
@@ -49,6 +49,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	}
 
 	/**
+	 * This method is used to read the database from the specific directory.
 	 *  @param directory
 	 */
 	@SuppressWarnings("unchecked")

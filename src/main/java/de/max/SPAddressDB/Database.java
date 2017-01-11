@@ -34,7 +34,7 @@ public interface Database<K, V> {
 	public boolean push();
 
 	/**
-	 * This method is used to push
+	 * This method is used to push the map with the parameter 'directory'.
 	 *
 	 * @param directory The directory of the database.
 	 * @return boolean Returns if the push was successful.

@@ -16,7 +16,7 @@ public class UI {
 	private final static String SEP = "|";
 
 	/**
-	 * This method is used to create the header of the GUI.
+	 * This method is used to create the header of the UI.
 	 */
 	public static void head() {
 		String[] in = {"ID", "First Name", "Last Name", "Email", "Phone"};
@@ -25,10 +25,10 @@ public class UI {
 	}
 
 	/**
-	 * This method is used to create the rows of the GUI.
+	 * This method is used to create the rows of the UI.
 	 * Input will be printed with seperators.
 	 *
-	 * @param in Input from the head method.
+	 * @param in Strings to print
 	 */
 	public static void row(String... in) {
 		if (in.length < COLS) {

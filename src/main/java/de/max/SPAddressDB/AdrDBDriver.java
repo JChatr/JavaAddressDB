@@ -1,5 +1,10 @@
 package de.max.SPAddressDB;
 
+/**
+ * This class is used to start the program.
+ * @author mk285
+ *
+ */
 public class AdrDBDriver {
 	/**
 	 * @param args Not used.
