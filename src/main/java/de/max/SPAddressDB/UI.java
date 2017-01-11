@@ -1,8 +1,6 @@
 
 package de.max.SPAddressDB;
 
-import java.util.Arrays;
-
 /**
  * This class is used to generate the user interface.
  *
