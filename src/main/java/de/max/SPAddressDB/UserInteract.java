@@ -274,6 +274,7 @@ public class UserInteract {
 	}
 
 	/**
+	 * This method is used to parse the range of an integer array
 	 * does some basic parsing on the range
 	 * any parse exceptions will bubble up (NumberFormatExecption)
 	 *

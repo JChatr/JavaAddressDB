@@ -14,7 +14,7 @@ public interface Database<K, V> {
 	/**
 	 * This method is used to get the map with the parameter 'directory'.
 	 *
-	 * @param directory
+	 * @param directory The directory of the database.
 	 * @return Returns the map.
 	 */
 	public Map<K, V> get(String directory);
@@ -22,23 +22,23 @@ public interface Database<K, V> {
 	/**
 	 * This method is used to push.
 	 *
-	 * @return boolean.
+	 * @return boolean Returns if the push was successful.
 	 */
 	public boolean push();
 
 	/**
 	 * This method is used to push
 	 *
-	 * @param directory
-	 * @return boolean
+	 * @param directory The directory of the database.
+	 * @return boolean Returns if the push was successful.
 	 */
 	public boolean push(String directory);
 
 	/**
-	 * This method is used to update
+	 * This method is used to update the database.
 	 *
-	 * @param data
-	 * @return boolean
+	 * @param data The list that is being updated.
+	 * @return boolean Returns if the update was successful.
 	 */
 	public boolean update(Map<K, V> data);
 }
