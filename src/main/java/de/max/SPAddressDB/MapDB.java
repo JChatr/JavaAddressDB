@@ -19,7 +19,7 @@ public class MapDB<K, V> implements Database<K, V> {
 
 	private Map<K, V> data;
 	// default dir is in a .txt in the parent folder of the .jar
-	private String globalDir = "." + File.separator + "DB.txt";
+	private String globalDir = ".." + File.separator + "ressources" + File.separator + "DB.txt";
 
 	/**
 	 * This method is used to get the Map.
