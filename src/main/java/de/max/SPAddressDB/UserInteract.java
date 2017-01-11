@@ -3,6 +3,11 @@ package de.max.SPAddressDB;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * This class is used to interact with the user.
+ *
+ * @author mk285
+ */
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// periodically updated list
@@ -12,6 +17,10 @@ public class UserInteract {
 	private int lastIndex;
 	private final int displayLen = 10;
 
+	/**
+	 * This method is used to print the header,
+	 * get the database and start the mainMenu method.
+	 */
 	public void run() {
 		System.out.println("*-------------------------*");
 		System.out.println("|                         |");
@@ -23,7 +32,8 @@ public class UserInteract {
 	}
 
 	/**
-	 * recursive method that represents the main menu of the manager
+	 * This method is used to print the main menu.
+	 * The user is able to choose from a main menu entry.
 	 */
 	private void mainMenu() {
 		System.out.println("\nPick one of the following options:\n");
@@ -60,7 +70,10 @@ public class UserInteract {
 	}
 
 	/**
-	 * prints the current database to the console
+	 * This method is used to print the database into the console.
+	 * It will start at the offset 'offset' and will print 10 entries.
+	 *
+	 * @param offset Starts at the offset 'offset'.
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
@@ -86,10 +99,11 @@ public class UserInteract {
 	}
 
 	/**
-	 * gets user input for the entry
+	 * This method is used to create a new entry in the database.
+	 * The user will be asked to enter the first name, last name and optional the email and phone number.
 	 */
-
 	private void createEntry() {
+
 		if (addresses.isEmpty()) {
 			lastIndex = 0;
 		} else {
@@ -119,6 +133,9 @@ public class UserInteract {
 
 	}
 
+	/**
+	 * This method is used to modify an existing entry.
+	 */
 	private void modifyEntry() {
 		if (!isEmpty()) {
 			browse(0);
@@ -154,7 +171,8 @@ public class UserInteract {
 	}
 
 	/**
-	 * deletes records if there are any
+	 * This method is used to delete an existing entry.
+	 * After browsing through the database the user can enter the ID of the entry that shall be deletd.
 	 */
 	private void deleteEntry() {
 		int removed = 0;
@@ -174,6 +192,10 @@ public class UserInteract {
 		}
 	}
 
+	/**
+	 * This method is used to search through the database.
+	 * After entering a search query the program will show the entries matching this query.
+	 */
 	private void search() {
 		System.out.print("Enter your search query: ");
 		String mask = getString(false);
@@ -189,7 +211,7 @@ public class UserInteract {
 	}
 
 	/**
-	 * cleans up
+	 * This method is used to close the program after updating the database and closing the scanner.
 	 */
 	private void exit() {
 		scan.close();
@@ -198,9 +220,9 @@ public class UserInteract {
 	}
 
 	/**
-	 * checks weather addresses is empty and prints error
+	 * This method is used to check weather addresses is empty.
 	 *
-	 * @return
+	 * @return Returns a error if addresses is empty.
 	 */
 	private boolean isEmpty() {
 		if (addresses.isEmpty()) {
@@ -212,9 +234,11 @@ public class UserInteract {
 	}
 
 	/**
-	 * @param rangeMin
-	 * @param rangeMax
-	 * @return
+	 * This method is used to return the user input as integer.
+	 *
+	 * @param rangeMin The minimum range of the input.
+	 * @param rangeMax The maximum range of the input.
+	 * @return Returns the user input.
 	 */
 	protected int[] getInt(int rangeMin, int rangeMax) {
 		int[] input;
@@ -234,7 +258,9 @@ public class UserInteract {
 	}
 
 	/**
-	 * @return
+	 * This method is used to return the user input as string.
+	 *
+	 * @return Returns the user input as an string.
 	 */
 	protected String getString(boolean optionalField) {
 		String out = "";
@@ -253,12 +279,11 @@ public class UserInteract {
 	}
 
 	/**
-	 * does some basic parsing on the range
-	 * any parse exceptions will bubble up (NumberFormatExecption)
+	 * This method is used to parse a string giving an integer range to an integer array.
 	 *
-	 * @param in
-	 * @return
-	 * @throws InputMismatchException
+	 * @param in The string that shall be parsed.
+	 * @return Returns the input range sorted as array.
+	 * @throws InputMismatchException Throws exception if the input doesn't match the format expectation.
 	 */
 	protected int[] getRange(String in) throws InputMismatchException {
 		try {
@@ -293,5 +318,7 @@ public class UserInteract {
 			// InputMismatch one to give some better context to what is going on
 			throw new InputMismatchException();
 		}
+
 	}
+
 }

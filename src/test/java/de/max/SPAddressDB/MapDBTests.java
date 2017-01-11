@@ -47,6 +47,7 @@ public class MapDBTests {
 		rem.delete();
 	}
 
+
 	/**
 	 *  test if the Database will error on a path with a typo
 	 */
@@ -58,6 +59,7 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
 	@Test
 	public void testValidPathGet() {
 		String path = "/home/max/";
@@ -92,6 +94,7 @@ public class MapDBTests {
 		File rem = new File(path);
 		rem.delete();
 	}
+
 
 	/**
 	 * tests if the Database will error if the application has insufficient permissions to

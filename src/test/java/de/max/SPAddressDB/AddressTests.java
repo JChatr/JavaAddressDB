@@ -16,6 +16,7 @@ public class AddressTests {
 		a.setFirstName("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the First Name
 	 * Attribute
@@ -27,6 +28,7 @@ public class AddressTests {
 		a.setFirstName("");
 		assertEquals("", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the First Name
 	 * Attribute
@@ -38,6 +40,7 @@ public class AddressTests {
 		a.setFirstName("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Last Name
 	 * Attribute
@@ -49,6 +52,7 @@ public class AddressTests {
 		a.setFirstName("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Last Name
 	 * Attribute
@@ -60,6 +64,7 @@ public class AddressTests {
 		a.setFirstName("");
 		assertEquals("", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Last Name
 	 * Attribute
@@ -71,6 +76,7 @@ public class AddressTests {
 		a.setFirstName("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getFirstName());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Last Name
 	 * Attribute
@@ -82,6 +88,7 @@ public class AddressTests {
 		a.setEmail("awdawdawdawd");
 		assertEquals("awdawdawdawd", a.getEmail());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Email
 	 * Attribute
@@ -93,6 +100,7 @@ public class AddressTests {
 		a.setEmail("");
 		assertEquals("", a.getEmail());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Email
 	 * Attribute
@@ -104,6 +112,7 @@ public class AddressTests {
 		a.setEmail("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getEmail());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Phone
 	 * Attribute
@@ -115,6 +124,7 @@ public class AddressTests {
 		a.setPhone("00255200");
 		assertEquals("00255200", a.getPhone());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Phone
 	 * Attribute
@@ -126,6 +136,7 @@ public class AddressTests {
 		a.setPhone("");
 		assertEquals("", a.getPhone());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores the Phone
 	 * Attribute
@@ -137,10 +148,10 @@ public class AddressTests {
 		a.setPhone("--;{}--.-.");
 		assertEquals("--;{}--.-.", a.getPhone());
 	}
+
 	/**
 	 * Tests weather or not the Address Object correctly stores all it's values
 	 * when they are set by the Constructor instead of the getters and setters
-	 *
 	 */
 	@Test
 	public void testAddressValueStore() {
@@ -173,6 +184,7 @@ public class AddressTests {
 		Address a = new Address(id, firstName, lastName, email, phone);
 		assertTrue(a.search(searchQuery));
 	}
+
 	/**
 	 * Tests weather or not the Address Object's search method will find entire fields
 	 * searches for the String "John"
@@ -188,6 +200,7 @@ public class AddressTests {
 		Address a = new Address(id, firstName, lastName, email, phone);
 		assertTrue(a.search(searchQuery));
 	}
+
 	/**
 	 * Tests weather or not the Address Object's search method will not find
 	 * strings that are not contained within the fields
@@ -204,6 +217,7 @@ public class AddressTests {
 		Address a = new Address(id, firstName, lastName, email, phone);
 		assertFalse(a.search(searchQuery));
 	}
+
 	/**
 	 * Tests weather or not the Address Object's search method will not partial
 	 * matches
@@ -220,6 +234,7 @@ public class AddressTests {
 		Address a = new Address(id, firstName, lastName, email, phone);
 		assertFalse(a.search(searchQuery));
 	}
+
 	/**
 	 * Tests weather or not the Address Object's search method will ignore the
 	 * case of the search query
@@ -236,6 +251,7 @@ public class AddressTests {
 		Address a = new Address(id, firstName, lastName, email, phone);
 		assertTrue(a.search(searchQuery));
 	}
+
 	/**
 	 * Tests weather or not the Address Object's search method will ignore the
 	 * case of the search query
@@ -264,6 +280,7 @@ public class AddressTests {
 		a.setId(id);
 		assertEquals(id, a.toString());
 	}
+
 	/**
 	 * Tests weather or not the Address Object will return the ID field when it's toString()
 	 * is called
@@ -275,6 +292,7 @@ public class AddressTests {
 		a.setId(id);
 		assertEquals(id, a.toString());
 	}
+
 	/**
 	 * Tests weather or not the Address Object will return the ID field when it's toString()
 	 * is called
