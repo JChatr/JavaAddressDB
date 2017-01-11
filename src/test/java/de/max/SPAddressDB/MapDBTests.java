@@ -11,8 +11,10 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 
+/**
+ * Junit tests for the MapDB Tests
+ */
 public class MapDBTests {
-
 
 	/**
 	 * tests weather objects that are written to the Database and then returned

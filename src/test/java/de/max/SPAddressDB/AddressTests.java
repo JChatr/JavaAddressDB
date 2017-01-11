@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Junit tests for the Address Object
+ */
 public class AddressTests {
 	/**
 	 * Tests weather or not the Address Object correctly stores the First Name

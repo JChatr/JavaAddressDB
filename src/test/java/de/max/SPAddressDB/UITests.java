@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import static org.junit.Assert.*;
 
 /**
- * Created by max on 10.01.17.
+ * Junit Tests for the UI printed to the console
  */
 public class UITests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();

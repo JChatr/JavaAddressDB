@@ -12,6 +12,9 @@ import java.util.InputMismatchException;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Junit tests for the UserInteract method
+ */
 public class UserInteractTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 

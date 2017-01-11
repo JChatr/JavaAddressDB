@@ -10,7 +10,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 /**
- * Created by max on 10.01.17.
+ * Junit tests for the AdrDBDriver Class
  */
 public class AdrDBDriverTests {
 	private ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
