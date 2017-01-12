@@ -24,7 +24,7 @@ public class UI {
 
 	/**
 	 * This method is used to create the rows of the UI.
-	 * Input will be printed with seperators.
+	 * Input will be printed with separators.
 	 *
 	 * @param in Strings to print
 	 */
@@ -48,12 +48,12 @@ public class UI {
 	}
 
 	/**
-	 * This method is used to seperate the head from the table body.
+	 * This method is used to separate the head from the table body.
 	 *
-	 * @param a Input the width of the seperator.
-	 * @return Returns the seperator.
+	 * @param a Input the width of the separator.
+	 * @return Returns the separator.
 	 */
-	static String getCol(int a) {
+	private static String getCol(int a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < a; i++) {
 			sb.append("-");

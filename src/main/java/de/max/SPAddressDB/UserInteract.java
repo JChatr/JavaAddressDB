@@ -11,9 +11,9 @@ import java.util.function.Supplier;
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// periodically updated list
-	protected Database<String, Address> db = new MapDB<>();
+	private Database<String, Address> db = new MapDB<>();
 	// always up to date list
-	protected Map<String, Address> addresses = db.get();
+	private Map<String, Address> addresses = db.get();
 	private int lastIndex;
 	private final int displayLen = 10;
 
