@@ -129,7 +129,6 @@ public class MapDB<K, V> implements Database<K, V> {
 	private String getDefaultGlobalDir() {
 		String dir = AdrDBDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
 		dir = System.getProperty( "os.name" ).contains("Windows") ? dir.replace("/", "\\").substring(1) : dir;
-		System.out.println(dir.substring(0, dir.lastIndexOf(File.separator) + 1) + "DB.txt");
 		return dir.substring(0, dir.lastIndexOf(File.separator) + 1) + "DB.txt";
 	}
 }
