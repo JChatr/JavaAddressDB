@@ -89,7 +89,7 @@ public class UserInteract {
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		if (draw < addresses.size()) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", draw / displayLen, addresses.size() / displayLen + 1);
 			offset = getInt(0, addresses.size() / displayLen + 1)[0];
 			// recurse if the user requests another page
 			if (offset != 0) {
