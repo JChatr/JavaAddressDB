@@ -1,6 +1,8 @@
 package de.max.SPAddressDB;
 
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -125,7 +127,9 @@ public class MapDB<K, V> implements Database<K, V> {
 	}
 
 	private String getDefaultGlobalDir() {
-		String dir = AdrDBDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		String dir = AdrDBDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+		dir = System.getProperty( "os.name" ).contains("Windows") ? dir.replace("/", "\\").substring(1) : dir;
+		System.out.println(dir.substring(0, dir.lastIndexOf(File.separator) + 1) + "DB.txt");
 		return dir.substring(0, dir.lastIndexOf(File.separator) + 1) + "DB.txt";
 	}
 }

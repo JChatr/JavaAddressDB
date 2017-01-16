@@ -1,2 +1,2 @@
 @Echo off
-java -jar AddressDBTest.jar
+java -jar AddressDB.jar
