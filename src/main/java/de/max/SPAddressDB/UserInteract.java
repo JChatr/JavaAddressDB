@@ -77,15 +77,15 @@ public class UserInteract {
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
-		List<Address> list = new ArrayList<>(addresses.values());
+		List<Address> offsetList = new ArrayList<>(addresses.values());
 		int draw = offset;
 		UI.head();
 		// loop through the map and start printing at the offset value until the offset is reached
-		list = list.subList(offset, addresses.size());
-		for (Address j : list) {
+		offsetList = offsetList.subList(offset, addresses.size());
+		for (Address j : offsetList) {
 			// is the current local index null?
 			if (j == null) continue;
-			if (++draw == displayLen + offset) break;
+			if (draw++ == displayLen + offset) break;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		if (draw < addresses.size()) {
