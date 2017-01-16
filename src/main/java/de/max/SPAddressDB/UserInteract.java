@@ -11,9 +11,9 @@ import java.util.function.Supplier;
 public class UserInteract {
 	private Scanner scan = new Scanner(System.in);
 	// periodically updated list
-	protected Database<String, Address> db = new MapDB<>();
+	private Database<String, Address> db = new MapDB<>();
 	// always up to date list
-	protected Map<String, Address> addresses = db.get();
+	private Map<String, Address> addresses = db.get();
 	private int lastIndex;
 	private final int displayLen = 10;
 
@@ -77,19 +77,19 @@ public class UserInteract {
 	 */
 	private void browse(int offset) {
 		System.out.println("\nCurrent records:");
-		List<Address> list = new ArrayList<>(addresses.values());
+		List<Address> offsetList = new ArrayList<>(addresses.values());
 		int draw = offset;
 		UI.head();
 		// loop through the map and start printing at the offset value until the offset is reached
-		list = list.subList(offset, addresses.size());
-		for (Address j : list) {
+		offsetList = offsetList.subList(offset, addresses.size());
+		for (Address j : offsetList) {
 			// is the current local index null?
 			if (j == null) continue;
-			if (++draw == displayLen + offset) break;
+			if (draw++ == displayLen + offset) break;
 			UI.row(j.getId(), j.getFirstName(), j.getLastName(), j.getEmail(), j.getPhone());
 		}
 		if (draw < addresses.size()) {
-			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", (draw - 1) / displayLen + 1, addresses.size() / displayLen + 1);
+			System.out.format("Page (%d/%d) Type 0 to exit. Show page: ", draw / displayLen, addresses.size() / displayLen + 1);
 			offset = getInt(0, addresses.size() / displayLen + 1)[0];
 			// recurse if the user requests another page
 			if (offset != 0) {

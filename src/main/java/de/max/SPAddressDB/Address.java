@@ -20,7 +20,7 @@ public class Address implements Serializable {
 	 * @author mk28
 	 */
 	public enum Types {
-		ID, FIRSTNAME, LASTNAME, EMAIL, PHONE;
+		ID, FIRSTNAME, LASTNAME, EMAIL, PHONE
 	}
 
 	/**

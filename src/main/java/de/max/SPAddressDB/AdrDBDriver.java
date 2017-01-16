@@ -8,9 +8,7 @@ package de.max.SPAddressDB;
 public class AdrDBDriver {
 	/**
 	 * @param args Not used.
-	 * @author mk285
-	 * <p>
-	 * This class is used to start the AdressDB program.
+	 * This class is used to start the AddressDB program.
 	 * It creates an object of the class UserInteract and runs the method run in UserInterface.
 	 */
 	public static void main(String[] args) {

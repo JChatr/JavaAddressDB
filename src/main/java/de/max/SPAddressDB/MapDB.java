@@ -1,6 +1,8 @@
 package de.max.SPAddressDB;
 
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +21,7 @@ public class MapDB<K, V> implements Database<K, V> {
 
 	private Map<K, V> data;
 	// default dir is in a .txt in the parent folder of the .jar
-	private String globalDir = "." + File.separator + "DB.txt";
-
+	private String globalDir = getDefaultGlobalDir();
 	/**
 	 * This method is used to get the Map.
 	 */
@@ -56,7 +57,7 @@ public class MapDB<K, V> implements Database<K, V> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<K, V> get(String directory) {
-//		 need to make sure path is valid
+		//		 need to make sure path is valid
 		if (!validDir(directory)) return null;
 		this.data = new LinkedHashMap<>();
 		Path path = Paths.get(directory);
@@ -66,8 +67,7 @@ public class MapDB<K, V> implements Database<K, V> {
 				V obj = (V) ois.readObject();
 				data.put((K) obj.toString(), obj);
 			}
-		} catch (ClassNotFoundException e) {
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 		}
 		return this.data;
 	}
@@ -124,5 +124,11 @@ public class MapDB<K, V> implements Database<K, V> {
 		File dir = new File(directory.substring(0, directory.lastIndexOf(File.separator) + 1));
 		// <3 IntelliJ
 		return !(!dir.isDirectory() || !dir.canRead() || !dir.canWrite());
+	}
+
+	private String getDefaultGlobalDir() {
+		String dir = AdrDBDriver.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+		dir = System.getProperty( "os.name" ).contains("Windows") ? dir.replace("/", "\\").substring(1) : dir;
+		return dir.substring(0, dir.lastIndexOf(File.separator) + 1) + "DB.txt";
 	}
 }
